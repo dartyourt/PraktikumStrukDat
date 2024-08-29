@@ -8,7 +8,6 @@
 /***********************************/
 //#include <stdio.h>
 
-typedef enum {false, true} boolean;
 
 /*NOTASI ALGORITMIK : */
 /* type Titik=<absis:integer, ordinat:integer>*/

@@ -15,7 +15,14 @@
 8.Lakukan berulang hingga semua subrutin dites */
 
 #include <stdio.h>
-#include "titik.h"
+#include <math.h>
+
+typedef enum {false, true} boolean;
+
+/*NOTASI ALGORITMIK : */
+/* type Titik=<absis:integer, ordinat:integer>*/
+/*DITERJEMAHKAN KE BAHASA C : */
+typedef struct {int absis; int ordinat;} Titik;
 
 /*KONSTRUKTOR*/
 /* procedure makeTitik(output T:Titik)*/
@@ -112,6 +119,7 @@ int Kuadran(Titik T){
         return 0;
     }
 }
+
 
 /*function Jarak(T1:Titik, T2:Titik)->real*/
 /*{mengembalikan jarak euclidian titik T1 dan T2}*/

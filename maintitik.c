@@ -45,10 +45,7 @@ int main() {
 	printf("Titik A berada di kuadran %d\n", Kuadran(A));
 	printf("Titik B berada di kuadran %d\n", Kuadran(B));
 	printf("================================\n");
-	printf("jarak titik A dan B adalah %f\n", JarakTitik(A,B));
+	printf("jarak titik A dan B adalah %f\n", Jarak(A,B));
 	printf("================================\n");
-
-
-
 	return 0;
 }
