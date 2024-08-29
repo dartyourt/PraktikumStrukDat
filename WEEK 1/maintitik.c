@@ -1,8 +1,8 @@
 /************************************/
 /* Program   : maintitik.c */
 /* Deskripsi : aplikasi driver modul Titik */
-/* NIM/Nama  : */
-/* Tanggal   : */
+/* NIM/Nama  : 24060123140151/Haidar Ali Laudza*/
+/* Tanggal   : 29/08/2024*/
 /***********************************/
 #include <stdio.h>
 #include "titik.c"
