@@ -117,6 +117,6 @@ int Kuadran(Titik T){
 /*{mengembalikan jarak euclidian titik T1 dan T2}*/
 /*{asumsi: aplikasikan rumus Pitagoras dan fungsi akar sqrt}*/
 float Jarak(Titik T1, Titik T2){
-
+    return sqrt(pow(T1.absis - T2.absis, 2) + pow(T1.ordinat - T2.ordinat, 2));
 }
 
