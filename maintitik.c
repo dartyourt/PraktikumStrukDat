@@ -16,6 +16,7 @@ int main() {
 	makeTitik(&A);
 	setAbsis(&A,3);
 	printf("\nNilai absis = %d",A.absis);
-	
+	setOrdinat(&A,4);
+	printf("\nNilai ordinat = %d",A.ordinat);
 	return 0;
 }
