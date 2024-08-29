@@ -100,7 +100,17 @@ void refleksiSumbuY(Titik *T){
 /*{mengembalikan posisi Titik T pada kuadran 1,2,3 atau 4}*/
 /*{asumsi: bila titik memotong sumbu, maka nilai 0 dianggap positif}*/
 int Kuadran(Titik T){
-
+    if(T.absis > 0 && T.ordinat > 0){
+        return 1;
+    }else if(T.absis < 0 && T.ordinat > 0){
+        return 2;
+    }else if(T.absis < 0 && T.ordinat < 0){
+        return 3;
+    }else if(T.absis > 0 && T.ordinat < 0){
+        return 4;
+    }else{
+        return 0;
+    }
 }
 
 /*function Jarak(T1:Titik, T2:Titik)->real*/
