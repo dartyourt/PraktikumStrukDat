@@ -1,0 +1,2 @@
+# PraktikumStrukDat
+ini pekerjaan praktikum
