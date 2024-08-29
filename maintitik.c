@@ -9,13 +9,13 @@
 
 int main() {
 	//kamus main
-	
+	Titik A;
 	
 	//algoritma
-	printf("Halo, ini driver modul Titik /n");
-	//makeTitik(&A);
-	//setAbsis($A,3);
-	//printf("/nNilai absis = %d",A.absis);
+	printf("Halo, ini driver modul Titik \n");
+	makeTitik(&A);
+	setAbsis(&A,3);
+	printf("\nNilai absis = %d",A.absis);
 	
 	return 0;
 }
