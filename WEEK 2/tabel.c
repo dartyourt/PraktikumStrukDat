@@ -202,23 +202,62 @@ int getMaxEl (Tabel T) {
 
 /*function getMinEl ( T: Tabel) -> integer
 	{mengembalikan nilai elemen terkecil } */
-int getMinEl (Tabel T);
+int getMinEl (Tabel T) {
+    int min = T.wadah[1];
+    for (int i = 2; i <= T.size; i++) {
+        if (T.wadah[i] < min) {
+            min = T.wadah[i];
+        }
+    }
+    return min;
+}
 
 /*function Modus ( T:Tabel ) -> integer 
 	{mengembalikan elemen pengisi T yang paling banyak muncul } */
 	/*asumsi: bila terdapat banyak yang sama maka yang diambil yang pertama*/
-int Modus (Tabel T);
+int Modus (Tabel T) {
+    int modus = T.wadah[1];
+    int maxCount = countX(T, T.wadah[1]);
+    for (int i = 2; i <= T.size; i++) {
+        int count = countX(T, T.wadah[i]);
+        if (count > maxCount) {
+            modus = T.wadah[i];
+            maxCount = count;
+        }
+    }
+    return modus;
+}
 
 /*OPERASI PENGURUTAN*/
 /*procedure SortAsc ( input/output T:Tabel)
 	{I.S.: T terdefinisi}
 	{F.S.: elemen dalam T.wadah terurut dari nilai terkecil hingga nilai terbesar}
 	{Proses: mengurutkan elemen dalam T.wadah dari nilai terkecil hingga nilai terbesar}*/
-void sortAsc (Tabel *T);
+void sortAsc (Tabel *T) {
+    for (int i = 1; i < T->size; i++) {
+        for (int j = i + 1; j <= T->size; j++) {
+            if (T->wadah[i] > T->wadah[j]) {
+                int temp = T->wadah[i];
+                T->wadah[i] = T->wadah[j];
+                T->wadah[j] = temp;
+            }
+        }
+    }
+}
 
 /*procedure SortDesc ( input/output T:Tabel)
 	{I.S.: T terdefinisi}
 	{F.S.: elemen dalam T.wadah terurut dari nilai terbesar hingga nilai terkecil}
 	{Proses: mengurutkan elemen dalam T.wadah dari nilai terbesar hingga nilai terkecil}*/
-void sortDesc (Tabel *T);
+void sortDesc (Tabel *T) {
+    for (int i = 1; i < T->size; i++) {
+        for (int j = i + 1; j <= T->size; j++) {
+            if (T->wadah[i] < T->wadah[j]) {
+                int temp = T->wadah[i];
+                T->wadah[i] = T->wadah[j];
+                T->wadah[j] = temp;
+            }
+        }
+    }
+}
 #endif
