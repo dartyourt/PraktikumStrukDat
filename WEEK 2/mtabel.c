@@ -11,15 +11,29 @@ int main() {
 	
 	/*algoritma*/
 	createTable(&T1);
-	getSize(T1);
+	printf("%d\n", getSize(T1));
 	addXTable(&T1,6);
 	addXTable(&T1,7);
 	addXTable(&T1,9);
 	addXTable(&T1,15);
-	//printf("%d", searchX(T1,6));
-	//printTable(T1);
-	//delXTable(&T1,6);
-	//printTable(T1);
+	printf("%d\n", searchX(T1,9));
+	addXTable(&T1,10);
+	addXTable(&T1,7);
+	viewTable(T1);
+	delXTable(&T1,6);
+	viewTable(T1);
+	delAllXTable(&T1,7);
+	viewTable(T1);
+	printf("%d\n", getSize(T1));
+	printTable(T1);
+	printf("%d\n", getSize(T1));
+	printf("%d\n", countX(T1,10));
+	viewTable(T1);
+	populate2(&T1);
+	viewTable(T1);
+	printf("%d\n", getSize(T1));
+	printf("%d\n", SumEl(T1));
+	printf("%.2f\n", AverageEl(T1));
 	//dst ...
 	return 0;
 }

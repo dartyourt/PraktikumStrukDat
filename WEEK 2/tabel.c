@@ -1,6 +1,6 @@
 #ifndef   tabel_c
 #define   tabel_c
-#include "boolean.h"
+#include "tabel.h"
 
 /* Deskripsi : tabel.c*/
 /* NIM/Nama : 24060123140151/Haidar Ali Laudza*/
@@ -9,8 +9,7 @@
 /* type Tabel = < wadah : array[1..10] of integer,
                    size : integer > */
 /* asumsi: indeks 0 tidak digunakan */
-typedef	struct { int wadah[11];
-                 int size; } Tabel;
+
 
 /*KONSTRUKTOR*/				 
 /*procedure createTable( output T: Tabel)
@@ -18,9 +17,9 @@ typedef	struct { int wadah[11];
 	{F.S.: size=0, setiap elemen wadah=-999}
 	{Proses: menginisialisasi T} */
 void createTable (Tabel *T) {
-    T->size = 0;
+    (*T).size = 0;
     for (int i = 1; i <= 10; i++) {
-        T->wadah[i] = -999;
+        (*T).wadah[i] = -999;
     }
 }
 /*SELEKTOR*/
@@ -86,6 +85,9 @@ void addXTable (Tabel *T, int X) {
         T->size++;
         T->wadah[T->size] = X;
     }
+    else {
+        printf("Tabel penuh\n");
+    }
 }
 
 /*procedure delXTable ( input/output T:Tabel, input X: integer )
@@ -97,6 +99,7 @@ void delXTable (Tabel *T, int X) {
     if (i != 0) {
         for (int j = i; j < T->size; j++) {
             T->wadah[j] = T->wadah[j + 1];
+            T->wadah[j + 1] = -999;
         }
         T->size--;
     }
@@ -106,27 +109,52 @@ void delXTable (Tabel *T, int X) {
 	{I.S.: T terdefinisi}
 	{F.S.: isi T.wadah berkurang semua elemen bernilai X jika belum kosong}
 	{Proses: menghapus semua elemen bernilai X, geser elemen sisa}*/
-void delAllXTable (Tabel *T, int X);
+void delAllXTable (Tabel *T, int X) {
+    int i = searchX(*T, X);
+    while (i != 0) {
+        delXTable(T, X);
+        i = searchX(*T, X);
+        T->wadah[T->size + 1] = -999;
+    }
+}
 
 /*OPERASI BACA/TULIS*/
 /*procedure printTable ( input T:Tabel )
 	{I.S.: T terdefinisi}
 	{F.S.: -}
 	{Proses: menampilkan semua elemen T ke layar} */
-void printTable (Tabel T);
+void printTable (Tabel T) {
+    for (int i = 1; i <= 10; i++) {
+        printf("%d ", T.wadah[i]);
+    }
+    printf("\n");
+}   
 
 /*procedure viewTable ( input T:Tabel )
 	{I.S.: T terdefinisi}
 	{F.S.: -}
 	{Proses: menampilkan elemen T yang terisi ke layar} */
-void viewTable (Tabel T);
+void viewTable (Tabel T) {
+    for (int i = 1; i <= T.size; i++) {
+        printf("%d ", T.wadah[i]);
+    }
+    printf("\n");
+}
 
 /*procedure populate1 ( input/output T:Tabel, input N: integer )
 	{I.S.: T terdefinisi, N terdefinisi dalam rentang 1..10}
 	{F.S.: T.wadah terisi sebanyak N elemen }
 	{Proses: mengisi elemen T.wadah sebanyak N kali dari keyboard}
 	{Syarat: angka-angka masukan keyboard > 0 }*/
-void populate1 (Tabel *T, int N);
+void populate1 (Tabel *T, int N) {
+    for (int i = 1; i <= N; i++) {
+        int X;
+        scanf("%d", &X);
+        if (X > 0) {
+            addXTable(T, X);
+        }
+    }
+}
 
 /*procedure populate2 ( input/output T:Tabel )
 	{I.S.: T terdefinisi}
@@ -134,20 +162,43 @@ void populate1 (Tabel *T, int N);
 	{Proses: mengisi elemen T.wadah berulang, bila angka 
 	dari keyboard <=0 maka berhenti, tidak diproses}
 	{Syarat: angka-angka masukan keyboard > 0 }*/
-void populate2 (Tabel *T);
+void populate2 (Tabel *T) {
+    int X;
+    scanf("%d", &X);
+    while (X > 0) {
+        addXTable(T, X);
+        scanf("%d", &X);
+    }
+}
 
 /*OPERASI STATISTIK*/
 /*function SumEl ( T:Tabel ) -> integer 
 	{mengembalikan jumlah semua elemen pengisi T } */
-int SumEl (Tabel T);
+int SumEl (Tabel T) {
+    int sum = 0;
+    for (int i = 1; i <= T.size; i++) {
+        sum += T.wadah[i];
+    }
+    return sum;
+}
 
 /*function AverageEl ( T:Tabel ) -> real 
 	{mengembalikan nilai rata-rata elemen pengisi T } */
-float AverageEl (Tabel T);
+float AverageEl (Tabel T) {
+    return (float) SumEl(T) / T.size;
+}
 
 /*function getMaxEl ( T: Tabel) -> integer
 	{mengembalikan nilai elemen terbesar } */
-int getMaxEl (Tabel T);
+int getMaxEl (Tabel T) {
+    int max = T.wadah[1];
+    for (int i = 2; i <= T.size; i++) {
+        if (T.wadah[i] > max) {
+            max = T.wadah[i];
+        }
+    }
+    return max;
+}
 
 /*function getMinEl ( T: Tabel) -> integer
 	{mengembalikan nilai elemen terkecil } */

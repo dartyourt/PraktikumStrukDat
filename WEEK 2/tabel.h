@@ -129,3 +129,5 @@ void sortAsc (Tabel *T);
 	{F.S.: elemen dalam T.wadah terurut dari nilai terbesar hingga nilai terkecil}
 	{Proses: mengurutkan elemen dalam T.wadah dari nilai terbesar hingga nilai terkecil}*/
 void sortDesc (Tabel *T);
+
+#endif
