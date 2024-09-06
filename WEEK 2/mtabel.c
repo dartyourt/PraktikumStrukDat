@@ -16,7 +16,7 @@ int main() {
 	addXTable(&T1,7);
 	addXTable(&T1,9);
 	addXTable(&T1,15);
-	printf("%d", searchX(T,6));
+	//printf("%d", searchX(T1,6));
 	//printTable(T1);
 	//delXTable(&T1,6);
 	//printTable(T1);
