@@ -34,6 +34,13 @@ int main() {
 	printf("%d\n", getSize(T1));
 	printf("%d\n", SumEl(T1));
 	printf("%.2f\n", AverageEl(T1));
+	printf("%d\n", getMaxEl(T1));
+	printf("%d\n", getMinEl(T1));
+	printf("%d\n", Modus(T1));
+	sortAsc(&T1);
+	viewTable(T1);
+	sortDesc(&T1);
+	viewTable(T1);
 	//dst ...
 	return 0;
 }
