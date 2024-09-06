@@ -92,7 +92,15 @@ void addXTable (Tabel *T, int X) {
 	{I.S.: T terdefinisi}
 	{F.S.: isi T.wadah berkurang 1 elemen jika belum kosong}
 	{Proses: menghapus 1 elemen bernilai X, geser semua elemen sisa}*/
-void delXTable (Tabel *T, int X);
+void delXTable (Tabel *T, int X) {
+    int i = searchX(*T, X);
+    if (i != 0) {
+        for (int j = i; j < T->size; j++) {
+            T->wadah[j] = T->wadah[j + 1];
+        }
+        T->size--;
+    }
+}
 
 /*procedure delAllXTable ( input/output T:Tabel, input X: integer )
 	{I.S.: T terdefinisi}
