@@ -147,3 +147,5 @@ void transposeMatriks(Matriks *M);
 /* function getTransposeMatriks(M: Matriks)
 	{menghasilkan sebuah matriks yang merupakan hasil transpose dari matriks M} */
 Matriks getTransposeMatriks(Matriks M);
+
+#endif
