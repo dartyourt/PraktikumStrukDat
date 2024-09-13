@@ -1,9 +1,9 @@
 #ifndef tabel_H
 #define tabel_H 
-/* Program   : */
-/* Deskripsi : */
-/* NIM/Nama  : */
-/* Tanggal   : */
+/* Program   : tabel.h*/
+/* Deskripsi : header file modul tabel*/
+/* NIM/Nama  : 24060123140151/Haidar Ali Laudza*/
+/* Tanggal   : 06/09/2024*/
 /***********************************/
 #include <stdio.h>
 #include "boolean.h"
