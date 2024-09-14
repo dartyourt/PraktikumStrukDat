@@ -85,9 +85,9 @@ void searchX(Matriks M, int X, int *row, int *col) {
     //algoritma
     found = false;
     i = 1;
-    while (i <= M.nbaris && !found) {
+    while (i <= getNBaris(M) && !found) {
         j = 1;
-        while (j <= M.nkolom && !found) {
+        while (j <= getNKolom(M) && !found) {
             if (M.cell[i][j] == X) {
                 found = true;
             } else {
@@ -109,7 +109,20 @@ void searchX(Matriks M, int X, int *row, int *col) {
 
 /* function countX (M:Matriks, X: integer) -> integer
 	{mengembalikan banyaknya elemen bernilai X dalam M.cell} */
-int countX (Matriks M, int X);
+int countX (Matriks M, int X) {
+    //kamus
+    int i, j, count;
+    //algoritma
+    count = 0;
+    for (i = 1; i <= getNBaris(M); i++) {
+        for (j = 1; j <= getNKolom(M); j++) {
+            if (M.cell[i][j] == X) {
+                count++;
+            }
+        }
+    }
+    return count;
+}
 
 /* MUTATOR */
 /* procedure addX (input/output M:Matriks, input X:integer, row:integer, col:integer)
@@ -194,7 +207,16 @@ void delX (Matriks *M, int X){
 	{I.S.: M terdefinisi}
 	{F.S.: M terisi dengan bilangan random sejumlah x baris dan y kolom, nbaris=x, nkolom=y}
 	{proses: mengisi matriks dengan bilangan integer random dengan jumlah baris x dan kolom y} */
-void isiMatriksRandom(Matriks *M, int x, int y);
+void isiMatriksRandom(Matriks *M, int x, int y) {
+    //kamus
+    int i, j;
+    //algoritma
+    for (i = 1; i <= x; i++) {
+        for (j = 1; j <= y; j++) {
+            addX(M, rand() % 100, i, j);
+        }
+    }
+}
 
 /* procedure isiMatriksIdentitas(input/output M: Matriks, input n: integer)
 	{I.S.: M terdefinisi}
@@ -220,7 +242,18 @@ void isiMatriksIdentitas(Matriks *M, int n){
 {I.S.: M terdefinisi}
 {F.S.: M terisi dengan inputan dari keybord sejumlah x baris dan y kolom, nbaris=x, nkolom=y}
 {proses: mengisi matriks dengan meminta inputan dari keyboard dengan jumlah baris x dan kolom y} */
-void populateMatriks(Matriks *M, int x, int y);
+void populateMatriks(Matriks *M, int x, int y) {
+    //kamus
+    int i, j, input;
+    //algoritma
+    for (i = 1; i <= x; i++) {
+        for (j = 1; j <= y; j++) {
+            printf("Masukkan elemen baris %d kolom %d: ", i, j);
+            scanf("%d", &input);
+            addX(M, input, i, j);
+        }
+    }
+}
 
 /* procedure printMatriks(input M:Matriks)
 	{I.S.: M terdefinisi}
@@ -257,46 +290,172 @@ void viewMatriks (Matriks M) {
 /* OPERASI ARITMATIKA */
 /* function addMatriks(M1,M2: Matriks) -> Matriks
 {mengembalikan hasil penjumlahan matriks M1 dengan M2} */
-Matriks addMatriks(Matriks M1, Matriks M2);
+Matriks addMatriks(Matriks M1, Matriks M2) {
+    //kamus
+    Matriks M;
+    int i, j;
+    //algoritma
+    initMatriks(&M);
+    if (getNBaris(M1) == getNBaris(M2) && getNKolom(M1) == getNKolom(M2)) {
+        for (i = 1; i <= getNBaris(M1); i++) {
+            for (j = 1; j <= getNKolom(M1); j++) {
+                addX(&M, M1.cell[i][j] + M2.cell[i][j], i, j);
+            }
+        }
+    }
+    return M;
+}
 
 /* function subMatriks(M1,M2: Matriks) -> Matriks
 {mengembalikan hasil pengurangan antara matriks M1 dengan M2} */
-Matriks subMatriks(Matriks M1, Matriks M2);
+Matriks subMatriks(Matriks M1, Matriks M2) {
+    //kamus
+    Matriks M;
+    int i, j;
+    //algoritma
+    initMatriks(&M);
+    if (getNBaris(M1) == getNBaris(M2) && getNKolom(M1) == getNKolom(M2)) {
+        for (i = 1; i <= getNBaris(M1); i++) {
+            for (j = 1; j <= getNKolom(M1); j++) {
+                addX(&M, M1.cell[i][j] - M2.cell[i][j], i, j);
+            }
+        }
+    }
+    return M;
+}
 
 /* function kaliMatriks(M1,M2: Matriks) -> Matriks
 {mengembalikan hasil perkalian antara matriks M1 dengan M2} */
-Matriks kaliMatriks(Matriks M1, Matriks M2);
+Matriks kaliMatriks(Matriks M1, Matriks M2) {
+    //kamus
+    Matriks M;
+    int i, j, k, sum;
+    //algoritma
+    initMatriks(&M);
+    if (getNKolom(M1) == getNBaris(M2)) {
+        for (i = 1; i <= getNBaris(M1); i++) {
+            for (j = 1; j <= getNKolom(M2); j++) {
+                sum = 0;
+                for (k = 1; k <= getNKolom(M1); k++) {
+                    sum += M1.cell[i][k] * M2.cell[k][j];
+                }
+                addX(&M, sum, i, j);
+            }
+        }
+    }
+    return M;
+}   
 
 /* function kaliSkalarMatriks(M: Matriks, x: integer) -> Matriks
 {mengembalikan perkalian antara matriks M dengan nilai skalar x} */
-Matriks kaliSkalarMatriks(Matriks M1, int x);
+Matriks kaliSkalarMatriks(Matriks M1, int x) {
+    //kamus
+    Matriks M;
+    int i, j;
+    //algoritma
+    initMatriks(&M);
+    for (i = 1; i <= getNBaris(M1); i++) {
+        for (j = 1; j <= getNKolom(M1); j++) {
+            addX(&M, M1.cell[i][j] * x, i, j);
+        }
+    }
+    return M;
+}
 
 /* OPERASI STATISTIK*/
 /* function getSumMatriks (M:Matriks) -> integer 
 	{mengembalikan jumlah semua elemen pengisi M.cell} */
-int getSumMatriks (Matriks M);
+int getSumMatriks (Matriks M) {
+    //kamus
+    int i, j, sum;
+    //algoritma
+    sum = 0;
+    for (i = 1; i <= getNBaris(M); i++) {
+        for (j = 1; j <= getNKolom(M); j++) {
+            sum += M.cell[i][j];
+        }
+    }
+    return sum;
+}
 
 /* function getAveragematriks (M:Matriks) -> real 
 	{mengembalikan nilai rata-rata elemen pengisi M.cell} */
-float getAverageMatriks (Matriks M);
+float getAverageMatriks (Matriks M) {
+    //kamus
+    int sum;
+    //algoritma
+    sum = getSumMatriks(M);
+    return (float) sum / (getNBaris(M) * getNKolom(M));
+}
 
 /* function getMaxMatriks (M:Matriks) -> integer
 	{mengembalikan nilai elemen terbesar pengisi M.cell } */
-int getMaxMatriks (Matriks M);
+int getMaxMatriks (Matriks M) {
+    //kamus
+    int i, j, max;
+    //algoritma
+    max = M.cell[1][1];
+    for (i = 2; i <= getNBaris(M); i++) {
+        for (j = 2; j <= getNKolom(M); j++) {
+            if (M.cell[i][j] > max) {
+                max = M.cell[i][j];
+            }
+        }
+    }
+    return max;
+}
 
 /* function getMinMatriks (M:Matriks) -> integer
 	{mengembalikan nilai elemen terkecil pengisi M.cell} */
-int getMinMatriks (Matriks M);
+int getMinMatriks (Matriks M) {
+    //kamus
+    int i, j, min;
+    //algoritma
+    min = M.cell[1][1];
+    for (i = 2; i <= getNBaris(M); i++) {
+        for (j = 2; j <= getNKolom(M); j++) {
+            if (M.cell[i][j] < min) {
+                min = M.cell[i][j];
+            }
+        }
+    }
+    return min;
+}
 
 /* OPERASI LAINNYA */
 /* procedure transposeMatriks(input/output M: Matriks)
 	{I.S.: M terdefinisi}
 	{F.S.: Matriks M sudah ditukar susunan baris dan kolomnya (Transpose)}
 	{proses: mengubah susunan cell matriks, M.cell[i,j] menjadi M.cell[j,i]} */
-void transposeMatriks(Matriks *M);
+void transposeMatriks(Matriks *M) {
+    //kamus
+    int i, j, temp;
+    //algoritma
+    for (i = 1; i <= getNBaris(*M); i++) {
+        for (j = i; j <= getNKolom(*M); j++) {
+            temp = M->cell[i][j];
+            M->cell[i][j] = M->cell[j][i];
+            M->cell[j][i] = temp;
+        }
+    }
+    temp = M->nbaris;
+    M->nbaris = M->nkolom;
+    M->nkolom = temp;
+}
 
 /* function getTransposeMatriks(M: Matriks)
 	{menghasilkan sebuah matriks yang merupakan hasil transpose dari matriks M} */
-Matriks getTransposeMatriks(Matriks M);
-
+Matriks getTransposeMatriks(Matriks M) {
+    //kamus
+    Matriks T;
+    int i, j;
+    //algoritma
+    initMatriks(&T);
+    for (i = 1; i <= getNBaris(M); i++) {
+        for (j = 1; j <= getNKolom(M); j++) {
+            addX(&T, M.cell[j][i], i, j);
+        }
+    }
+    return T;
+}
 #endif
