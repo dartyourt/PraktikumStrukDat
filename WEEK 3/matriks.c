@@ -134,7 +134,6 @@ void addX (Matriks *M, int X, int row, int col) {
 
     //algoritma
     if (!isFullMatriks(*M)) {
-        printf("Matriks belum penuh\n");
         if (row > getNBaris(*M)) {
             (*M).nbaris = row;
         }
