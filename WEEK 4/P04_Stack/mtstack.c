@@ -58,8 +58,7 @@ int main()
 	pop( &A, &poppedValue);
 	printf("Popped value: %c\n", poppedValue);
 	viewStack(A);
-	char str[] = "kasur 
-	rusak";
+	char str[] = "kasur rusak";
 	if (isPalindrom(str))
 	{
 		printf("String is palindrom\n");
