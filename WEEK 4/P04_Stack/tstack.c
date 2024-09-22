@@ -14,7 +14,7 @@ void createStack (Tstack *T)
     /*algoritma*/
     (*T).top = 0;
     for (i=1; i<=10; i++)
-        (*T).wadah[i] = '#';
+        (*T).wadah[i] = ' ';
     }
 
 /*function top( T: Tstack) -> integer
