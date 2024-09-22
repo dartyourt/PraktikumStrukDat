@@ -129,11 +129,30 @@ void pushN (Tstack *T, int N)
 	{I.S.: T terdefinisi, E terdefinisi }
 	{F.S.: T bertambah 1 elemen (E) bila belum penuh atau menjadi kosong bila stack penuh }
 	{Proses: menumpuk top atau menghapus semua elemen }*/
-void pushBabel1 (Tstack *T, char E);
+void pushBabel1 (Tstack *T, char E)
+    { /*kamus lokal*/
+    /*algoritma*/
+    if (!isFullStack(*T))
+        push(T, E);
+    else
+        while (!isEmptyStack(*T))
+            pop(T, &E);
+    }
 
 /*procedure pushZuma ( input/output T:Tstack, input E: character )
 	{I.S.: T terdefinisi, E terdefinisi }
 	{F.S.: T bertambah 1 elemen (E) atau berkurang 1 elemen bila E bernilai sama dengan top }
 	{Proses: menumpuk top atau menghapus elemen top }
     {contoh: T=['A','B','C'], E='C' menjadi T=['A','B']}*/
-void pushZuma (Tstack *T, char E);
+void pushZuma (Tstack *T, char E)
+    { /*kamus lokal*/
+      char X;
+    /*algoritma*/
+    if (!isEmptyStack(*T))
+        if (E == infotop(*T))
+            pop(T, &X);
+        else
+            push(T, E);
+    else
+        push(T, E);
+    }
