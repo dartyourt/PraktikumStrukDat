@@ -15,7 +15,7 @@
 {cara akses: Q:tQueue2, Q.head = head(Q) ...} */
 typedef struct { char wadah[6];  //kapasitas 5 elemen 
                   int head; 
-                  int tail 
+                  int tail; 
 				} tqueue2;
 
 /*function isEmptyQueue2(Q:tQueue2) -> boolean
@@ -105,6 +105,6 @@ void enqueue2N(tqueue2 *Q, int N);
 /*Function isEqualQueue2(Q1:TQueue2,Q2:TQueue2) -> boolean
 {mengembalikan true jika Q1 dan Q2 berisi elemen yang sama}
 {ingat, kondisi head Q1 dan Q2 mungkin tidak sama} */
-boolean isEqualQueue2(queue2 Q1,queue2 Q2);
+boolean isEqualQueue2(tqueue2 Q1,tqueue2 Q2);
 
 #endif
