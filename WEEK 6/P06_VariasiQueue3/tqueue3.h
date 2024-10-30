@@ -16,7 +16,7 @@
 {cara akses: Q:tQueue3, Q.head=head(Q) ...} */
 typedef struct { char wadah[6]; //kapasitas 5 elemen 
                   int head; 
-                  int tail 
+                  int tail; 
 				} tqueue3;
 
 /*function isEmptyQueue3(Q:tQueue3) -> boolean
