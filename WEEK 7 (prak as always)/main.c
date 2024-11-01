@@ -30,9 +30,21 @@ int main()
 	  P = next(P);
   }
   //PrintList( Senarai );8*/
+
   CreateList(&Senarai);
   InsertVFirst(&Senarai,'G');
   InsertVLast(&Senarai,'N');
   PrintList(Senarai);
+  DeleteVLast(&Senarai,&P);
+  printf("Elemen terakhir yang dihapus : %c\n",P);
+  PrintList(Senarai);
+  InsertVFirst(&Senarai,'A');
+  InsertVLast(&Senarai,'Z');
+  InsertVLast(&Senarai,'J');
+  InsertVFirst(&Senarai,'X');
+  PrintList(Senarai);
+  Invers(&Senarai);
+  PrintList(Senarai);
+  prinrf("Jumlah elemen : %d\n",NbElm(Senarai));
   return 0;
 }

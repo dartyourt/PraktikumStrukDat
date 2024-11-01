@@ -83,6 +83,7 @@ int NbElm(List1 L){
 		count++;
 		P = next(P);
 	}
+	return count;
 }
 
 /******* PENAMBAHAN ELEMEN LIST ********/
@@ -155,8 +156,21 @@ Proses: Elemen terakhir list L dihapus, dan didealokasi. Hasil penghapusan disim
 List mungkin menjadi kosong. Jika tidak kosong, elemen terakhir yang baru adalah elemen sebelum elemen terakhir yang lama. }*/
 void DeleteVLast(List1 *L, infotype *V){
 	//kamus lokal
-	address P, Prec;
+	address Prec, Last;
 	//algoritma
+	if (!IsEmptyList(*L)) {
+		Prec = First(*L);
+		Last = First(*L);
+		while (next(Last) != NIL) {
+			Prec = Last;
+			Last = next(Last);
+		}
+		*V = info(Last);
+		next(Prec) = NIL;
+		Dealokasi(&Last);
+	}
+	else {
+		*V = '#';}
 
 
 }
@@ -166,19 +180,49 @@ void DeleteVLast(List1 *L, infotype *V){
 { I.S. L, X terdefinisi }
 { F.S. A berisi alamat elemen yang nilainya X.
 Proses: Mencari apakah ada elemen list dengan info(P)= X. Jika ada, mengisi A dengan address elemen tersebut. Jika tidak ada, A=Nil }*/
-void SearchX(List1 L, infotype X, address A);
+void SearchX(List1 L, infotype X, address *A){
+	//kamus lokal
+	address P;
+	//algoritma
+	P = First(L);
+	while (P != NIL && info(P) != X) {
+		P = next(P);
+	}
+	*A = P;
+}
 
 /*** MANIPULASI ELEMEN LIST ***/
 /*Procedure UpdateX(input/output L:List1, input X:infotype, input Y:infotype)
 { I.S. L, X, Y terdefinisi }
 { F.S. L tetap, atau elemen bernilai X berubah menjadi Y.
 Proses: Mengganti elemen bernilai X menjadi Y}*/
-void UpdateX(List1 *L, infotype X, infotype Y);
+void UpdateX(List1 *L, infotype X, infotype Y){
+	//kamus lokal
+	address P;
+	//algoritma
+	SearchX(*L, X, &P);
+	if (P != NIL) {
+		info(P) = Y;
+	}
+}
 
 /*Procedure Invers(input/output L:List1)
 { I.S. L terdefinisi }
 { F.S. urutan posisi elemen terbalik, misal {'i','t','u'} menjadi {'u','t','i'} }*/
-void Invers(List1 *L);
+void Invers(List1 *L){
+	//kamus lokal
+	address P, Prec, Last;
+	//algoritma
+	Prec = NIL;
+	P = First(*L);
+	while (P != NIL) {
+		Last = P;
+		P = next(P);
+		next(Last) = Prec;
+		Prec = Last;
+	}
+	First(*L) = Last;
+}
 
 /*********** SOAL TAMBAHAN, DIKERJAKAN BILA LUANG *****************/
 /*function CountX(L:List1, X:infotype) -> integer */
