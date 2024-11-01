@@ -4,6 +4,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define NIL NULL
+#define First(L) (L).first
+#define info(P) (P)->info
+#define next(P)  (P)->next
+
+
 /*type infotype = character  */
 typedef char infotype;
 
