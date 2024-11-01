@@ -141,7 +141,7 @@ void DeleteVFirst(List1 *L, infotype *V){
 		P = First(*L);
 		*V = info(P);
 		First(*L) = next(P);
-		Dealokasi(P);
+		Dealokasi(&P);
 	}
 	else {
 		*V = '#';
@@ -157,7 +157,7 @@ void DeleteVLast(List1 *L, infotype *V){
 	//kamus lokal
 	address P, Prec;
 	//algoritma
-	
+
 
 }
 
