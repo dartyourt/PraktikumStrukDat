@@ -35,7 +35,7 @@ address Alokasi(infotype E); //representasi fisik fungsi
 /* {I.S. P terdefinisi 
     F.S. P dikembalikan ke NIL  
 	Proses: Melakukan pengosongan address P} */
-void Dealokasi (address P);
+void Dealokasi (address *P);
 
 /********** PEMBUATAN LIST KOSONG ***********/
 /* Procedure CreateList(output L:List1)

@@ -4,7 +4,7 @@
 /* Tanggal : Oktober 2024 */
 #include <stdio.h>
 #include <stdlib.h>
-#include "list1.h"
+#include "list1.c"
 int main()
 { //kamus
   address A; 
@@ -32,6 +32,7 @@ int main()
   //PrintList( Senarai );8*/
   CreateList(&Senarai);
   InsertVFirst(&Senarai,'G');
+  InsertVLast(&Senarai,'N');
   PrintList(Senarai);
   return 0;
 }

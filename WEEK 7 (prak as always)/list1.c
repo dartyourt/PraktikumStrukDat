@@ -25,14 +25,12 @@ address Alokasi(infotype E) {
 /* {I.S. P terdefinisi 
     F.S. P dikembalikan ke NIL  
 	Proses: Melakukan pengosongan address P} */
-void Dealokasi (address P) {
+void Dealokasi (address *P) {
 	//kamus lokal
 	
 	//algoritma
-	if ( P != NIL ) {
-		next(P) = NIL;
-	}
-	P = NIL;
+	free(*P);
+	*P = NIL;
 }
 /*********** OPERATORS ***********/
 /********** PEMBUATAN LIST KOSONG ***********/
@@ -69,6 +67,7 @@ void PrintList(List1 L){
 	 	 printf("\t%c",info(P));
 	 	 P = next(P);
   	}
+	printf("\n");
 }
 
 /*function NbElm(L:List1) --> integer
@@ -110,7 +109,23 @@ void InsertVFirst(List1 *L, infotype V ){
 { I.S. L mungkin kosong, V terdefinisi }
 { F.S. L tetap, atau bertambah elemen terakhir berinfo V}
 { Proses: Insert sebuah elemen beralamat P dengan Info(P)=V sebagai elemen akhir list linier L yg mungkin kosong }*/
-void InsertVLast(List1 *L, infotype V );
+void InsertVLast(List1 *L, infotype V ){
+	//kamus lokal
+	address P, Last;
+	//algoritma
+	P = Alokasi(V);
+	if (IsEmptyList(*L)) {
+		First(*L) = P;
+	}
+	else {
+		Last = First(*L);
+		while (next(Last) != NIL) {
+			Last = next(Last);
+		}
+		next(Last) = P;
+	}
+
+}
 
 /******* PENGHAPUSAN ELEMEN ********/
 /*Procedure DeleteVFirst(input/output L:List1, output V:infotype )
@@ -118,14 +133,33 @@ void InsertVLast(List1 *L, infotype V );
 { F.S. L tetap, atau berkurang elemen pertamanya.
 Proses: Elemen pertama list L dihapus, dan didealokasi. Hasil penghapusan disimpan nilainya dalam V. default nilai V='#'.
 List mungkin menjadi kosong. Jika tidak kosong, elemen pertama yang baru adalah elemen sesudah elemen pertama yang lama. } */
-void DeleteVFirst(List1 *L, infotype *V);
+void DeleteVFirst(List1 *L, infotype *V){
+	//kamus lokal
+	address P;
+	//algoritma
+	if (!IsEmptyList(*L)) {
+		P = First(*L);
+		*V = info(P);
+		First(*L) = next(P);
+		Dealokasi(P);
+	}
+	else {
+		*V = '#';
+	}
+}
 
 /*Procedure DeleteVLast(input/output L:List1, output V:infotype )
 { I.S. L terdefinisi }
 { F.S. L tetap atau berkurang elemen terakhirnya.
 Proses: Elemen terakhir list L dihapus, dan didealokasi. Hasil penghapusan disimpan nilainya dalam V. default nilai V='#'.
 List mungkin menjadi kosong. Jika tidak kosong, elemen terakhir yang baru adalah elemen sebelum elemen terakhir yang lama. }*/
-void DeleteVLast(List1 *L, infotype *V);
+void DeleteVLast(List1 *L, infotype *V){
+	//kamus lokal
+	address P, Prec;
+	//algoritma
+	
+
+}
 
 /*** PENCARIAN ***/
 /*Procedure SearchX(input L:List1, input X:infotype, output A:address )
