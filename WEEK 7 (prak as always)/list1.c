@@ -227,50 +227,180 @@ void Invers(List1 *L){
 /*********** SOAL TAMBAHAN, DIKERJAKAN BILA LUANG *****************/
 /*function CountX(L:List1, X:infotype) -> integer */
 /*{ mengembalikan banyaknya kemunculan X dalam list L}*/
-int CountX(List1 L, infotype X);
+int CountX(List1 L, infotype X){
+	//kamus lokal
+	address P;
+	int countX;
+	//algoritma
+	P = First(L);
+	countX = 0;
+	while (P != NIL) {
+		if (info(P) == X) {
+			countX++;
+		}
+		P = next(P);
+	}
+	return countX;
+}
 
 /*function FrekuensiX(L:List1, X:infotype) -> real */
 /*{ mengembalikan rasio kemunculan X dibandingkan ukuran list L }*/
-float FrekuensiX(List1 L, infotype X);
+float FrekuensiX(List1 L, infotype X){
+	//kamus lokal
+	
+	//algoritma
+	return (float) CountX(L, X) / NbElm(L);
+}
 
 /*Procedure SearchAllX(input L:List1, input X:infotype)
 { I.S. L, X terdefinisi }
 { F.S. -
 Proses: menampilkan posisi-posisi (1,2,3,...nbElm(L)) kemunculan elemen X dalam list L }*/
-void SearchAllX(List1 L, infotype X);
+void SearchAllX(List1 L, infotype X){
+	//kamus lokal
+	address P;
+	int i;
+	//algoritma
+	P = First(L);
+	i = 1;
+	while (P != NIL) {
+		if (info(P) == X) {
+			printf("%d ", i);
+		}
+		P = next(P);
+		i++;
+	}
+	printf("\n");
+}
 
 /*Procedure UpdateAllX(input/output L:List1, input X:infotype, input Y:infotype)
 { I.S. L, X, Y terdefinisi }
 { F.S. L tetap, atau semua elemen bernilai X berubah menjadi Y. 
 Proses : mengganti semua elemen bernilai X menjadi Y}*/
-void UpdateAllX(List1 *L, infotype X, infotype Y);
+void UpdateAllX(List1 *L, infotype X, infotype Y){
+	//kamus lokal
+	address P;
+	//algoritma
+	P = First(*L);
+	while (P!=NIL) {
+		if (info(P)== X) {
+			info(P) = Y;
+		}
+		P = next(P);
+	}
+}
 
 /* Procedure InsertVAfter(input/output L:List1, input V:infotype, input VA:infotype )
 { I.S. List L mungkin kosong, V, S terdefinisi }
 { F.S. L tetap, atau bertambah 1 elemen (VA) pada posisi setelah elemen berinfo V}
 { Proses: Insert sebuah elemen beralamat P dengan Info(P)=VA sebagai elemen setelah elemen V list linier L yg mungkin kosong } */
-void InsertVAfter(List1 *L, infotype V, infotype VA );
+void InsertVAfter(List1 *L, infotype V, infotype VA ){
+	//kamus lokal
+	address P, prec;
+	//algoritma
+	P=Alokasi (VA);
+	SearchX(*L,V,&prec);
+	if (prec!=NIL) {
+		next(P)=next(prec);
+		next(prec)=P;
+	}
+}
 
 /*function MaxMember(L:List1) -> integer */
 /*{ mengembalikan banyaknya huruf yang paling banyak muncul di list L}*/
-int MaxMember(List1 L);
+int MaxMember(List1 L){
+	//kamus lokal
+	address P;
+	int max, count;
+	//algoritma
+	P = First(L);
+	max = 0;
+	while (P != NIL) {
+		count = CountX(L, info(P));
+		if (count > max) {
+			max = count;
+		}
+		P = next(P);
+	}
+	return max;
+}
 
 /*function Modus(L:List1) -> infotype */
 /*{ mengembalikan huruf yang paling banyak muncul dalam list L}*/
-infotype Modus(List1 L);
+infotype Modus(List1 L){
+	//kamus lokal
+	address P;
+	//algoritma
+	P = First(L);
+	while (P != NIL) {
+		if (CountX(L, info(P)) == MaxMember(L)) {
+			return info(P);
+		}
+		P = next(P);
+	}
+}
 
 /*OPERASI BANYAK LIST*/
 /*Procedure ConcatList(input L1:List1, input L2:List1, output L:List1)
 {I.S.: L1,L2 terdefinisi ; 
  F.S.: L gabungan L1 dan L2}*/
-void ConcatList(List1 L1, List1 L2, List1 *L); 
+void ConcatList(List1 L1, List1 L2, List1 *L){
+	//kamus lokal
+	address P, Last;
+	//algoritma
+	CreateList(L);
+	if (!IsEmptyList(L1)) {
+		P = First(L1);
+		while (P != NIL) {
+			InsertVLast(L, info(P));
+			P = next(P);
+		}
+	}
+	if (!IsEmptyList(L2)) {
+		P = First(L2);
+		while (P != NIL) {
+			InsertVLast(L, info(P));
+			P = next(P);
+		}
+	}
+}
 
 /*Procedure SplitList(input L:List1, output L1:List1, output L2:List1)
 {I.S.: L terdefinisi ; 
  F.S.: L1, L2 hasil pemecahan L}*/
-void SplitList(List1 L, List1 *L1, List1 *L2);
+void SplitList(List1 L, List1 *L1, List1 *L2){
+	//kamus lokal
+	address P;
+	int i, n;
+	//algoritma
+	CreateList(L1);
+	CreateList(L2);
+	n = NbElm(L);
+	P = First(L);
+	i = 1;
+	while (P != NIL) {
+		if (i <= n/2) {
+			InsertVLast(L1, info(P));
+		}
+		else {
+			InsertVLast(L2, info(P));
+		}
+		P = next(P);
+		i++;
+	}
+}
 
 /*Procedure CopyList(input L1:List1, output L2:List1)
 {I.S.: L1 terdefinisi;  
  F.S.: L2 menjadi salinan L1}*/
-void CopyList(List1 L1, List1 *L2);
+void CopyList(List1 L1, List1 *L2){
+	//kamus lokal
+	address P;
+	//algoritma
+	CreateList(L2);
+	P = First(L1);
+	while (P != NIL) {
+		InsertVLast(L2, info(P));
+		P = next(P);
+	}
+}

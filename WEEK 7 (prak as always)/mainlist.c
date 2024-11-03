@@ -10,7 +10,8 @@ int main()
   address A; 
   address B;
   address P;
-  List1 Senarai;
+  infotype D;
+  List1 Senarai, Seranai, Senam, Sese, Nana, Rai;
   //algoritma
   
   /*aplikasi tipe address
@@ -32,11 +33,12 @@ int main()
   //PrintList( Senarai );8*/
 
   CreateList(&Senarai);
+  CreateList(&Seranai);
   InsertVFirst(&Senarai,'G');
   InsertVLast(&Senarai,'N');
   PrintList(Senarai);
-  DeleteVLast(&Senarai,&P);
-  printf("Elemen terakhir yang dihapus : %c\n",P);
+  DeleteVLast(&Senarai, &D);
+  printf("Elemen terakhir yang dihapus : %c\n", D);
   PrintList(Senarai);
   InsertVFirst(&Senarai,'A');
   InsertVLast(&Senarai,'Z');
@@ -44,7 +46,25 @@ int main()
   InsertVFirst(&Senarai,'X');
   PrintList(Senarai);
   Invers(&Senarai);
+  InsertVFirst(&Senarai,'A');
+  InsertVLast(&Senarai,'A');
   PrintList(Senarai);
-  prinrf("Jumlah elemen : %d\n",NbElm(Senarai));
+  printf("Jumlah elemen A : %d\n",CountX(Senarai,'A'));
+  printf("Frekuensi A : %.2f\n",FrekuensiX(Senarai,'A'));
+  SearchAllX(Senarai,'A');
+  printf("Jumlah elemen : %d\n",NbElm(Senarai));
+  UpdateAllX(&Senarai,'A','B');
+  InsertVAfter(&Senarai,'G','L');
+  PrintList(Senarai);
+  InsertVFirst(&Seranai,'G');
+  InsertVLast(&Seranai,'N');
+  PrintList(Seranai);
+  ConcatList(Senarai, Seranai, &Senam);
+  PrintList(Senam);
+  SplitList(Senam, &Sese, &Nana);
+  PrintList(Sese);
+  PrintList(Nana);
+  CopyList(Sese, &Rai);
+  PrintList(Rai);
   return 0;
 }
