@@ -45,17 +45,34 @@ void CreateList (List2 *L){
 /****************** TEST KONDISI LIST ******************/
 /* function IsEmptyList(L:List2) --> boolean 
    {mengembalikan true bila list L kosong} */
-boolean IsEmptyList (List2 L);
+boolean IsEmptyList (List2 L){
+   //kamus lokal
+
+   //algoritma
+   return First(L)==NIL;
+}
 
 /* function IsOneElm(L:List2) --> boolean 
    {mengembalikan true bila list L hanya punya satu elemen} */
-boolean IsOneElm (List2 L);
+boolean IsOneElm (List2 L){
+   return (First(L)!=NIL && next(First(L))==First(L));
+}
 
 /*********** PENELUSURAN ***********/
 /*procedure PrintList(input L:List2)
 {I.S. L terdefinisi; F.S. :-}
 { menampilkan info semua elemen list L} */
-void PrintList(List2 L);
+void PrintList(List2 L){
+   //kamus lokal
+   address P;
+   //algoritma
+   P = First(L);
+   do {
+      printf("%c ",info(P));
+      P = next(P);
+   } while (P != First(L));
+   printf("\n");
+}
 
 /*function NbElm(L:List2) --> integer
 { menghitung banyaknya elemen list L} */
@@ -66,13 +83,48 @@ int NbElm(List2 L);
 { I.S. List L mungkin kosong, V terdefinisi }
 { F.S. L tetap, atau bertambah elemen pertama berinfo V }
 { Proses: Insert sebuah elemen beralamat P dengan Info(P)=V sebagai elemen pertama list linier L yg mungkin kosong } */
-void InsertVFirst(List2 *L, infotype V );
+void InsertVFirst(List2 *L, infotype V ){
+   //kamus lokal
+   address P, Last;
+   //algoritma
+   P = Alokasi(V);
+   if (IsEmptyList(*L)) {
+      First(*L) = P;
+      next(P) = First(*L);
+   }
+   else {
+      Last = First(*L);
+      while (next(Last) != First(*L)) {
+         Last = next(Last);
+      }
+      next(P) = First(*L);
+      next(Last) = P;
+      First(*L) = P;
+   }
+}
 
 /*Procedure InsertVLast(input/output L:List2, input V:infotype )
 { I.S. List L mungkin kosong, V terdefinisi }
 { F.S. L tetap, atau bertambah elemen terakhir berinfo V, next(P)=First(L)}
 { Proses: Insert sebuah elemen beralamat P dengan Info(P)=V sebagai elemen akhir list linier L yg mungkin kosong }*/
-void InsertVLast(List2 *L, infotype V );
+void InsertVLast(List2 *L, infotype V ){
+   //kamus lokal
+   address P, Last;
+   //algoritma
+   P = Alokasi(V);
+   if (IsEmptyList(*L)) {
+      First(*L) = P;
+      next(P) = First(*L);
+   }
+   else {
+      Last = First(*L);
+      while (next(Last) != First(*L)) {
+         Last = next(Last);
+      }
+      next(P) = First(*L);
+      next(Last) = P;
+   }
+}
 
 /******* PENGHAPUSAN ELEMEN ********/
 /*Procedure DeleteVFirst(input/output L:List2, output V:infotype )
