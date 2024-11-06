@@ -131,13 +131,61 @@ void InsertVLast(List2 *L, infotype V ){
 { I.S. List L terdefinisi }
 { F.S. Elemen pertama list L dihapus dan didealokasi. Nilai penghapusan disimpan dalam V. Default V='#'.
 List mungkin menjadi kosong. Jika tidak kosong, elemen pertama list yang baru adalah elemen sesudah elemen pertama yang lama. } */
-void DeleteVFirst(List2 *L, infotype *V);
+void DeleteVFirst(List2 *L, infotype *V){
+   //kamus lokal
+   address Last, P;
+   //algoritma
+   if (!IsEmptyList(*L)) {
+      P = First(*L);
+      *V = info(P);
+      if (IsOneElm(*L)) {
+         Dealokasi(&P);
+         First(*L) = NIL;
+      }
+      else {
+         Last = First(*L);
+         while (next(Last) != First(*L)) {
+            Last = next(Last);
+         }
+         First(*L) = next(First(*L));
+         next(Last) = First(*L);
+         Dealokasi(&P);
+      }
+   }
+   else {
+      *V = '#';
+   }
+}
 
 /*Procedure DeleteVLast(input/output L:List2, output V:infotype )
 { I.S. List L terdefinisi }
 { F.S. Elemen terakhir list L dihapus dan didealokasi. Nilai penghapusan disimpan dalam V. Default V='#'.
 List mungkin menjadi kosong. Jika tidak kosong, elemen terakhir list yang baru adalah elemen sebelum elemen terakhir yang lama. }*/
-void DeleteVLast(List2 *L, infotype *V);
+void DeleteVLast(List2 *L, infotype *V){
+   //kamus lokal
+   address Prec, Last;
+   //algoritma
+   if (!IsEmptyList(*L)) {
+      Prec = First(*L);
+      Last = First(*L);
+      while (next(Last) != First(*L)) {
+         Prec = Last;
+         Last = next(Last);
+      }
+      *V = info(Last);
+      if (IsOneElm(*L)) {
+         Dealokasi(&Last);
+         First(*L) = NIL;
+      }
+      else {
+         next(Prec) = First(*L);
+         Dealokasi(&Last);
+      }
+   }
+   else {
+      *V = '#';
+   }
+}
 
 /*Procedure DeleteX(input/output L:List2, input X:infotype)
 { I.S. List L tidak kosong }
