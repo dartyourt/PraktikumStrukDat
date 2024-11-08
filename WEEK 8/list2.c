@@ -67,16 +67,32 @@ void PrintList(List2 L){
    address P;
    //algoritma
    P = First(L);
-   do {
-      printf("%c ",info(P));
-      P = next(P);
-   } while (P != First(L));
+   if (P != NIL) {
+      do {
+         printf("\t%c",info(P));
+         P = next(P);
+      } while (P != First(L));
+   }
    printf("\n");
 }
 
 /*function NbElm(L:List2) --> integer
 { menghitung banyaknya elemen list L} */
-int NbElm(List2 L);
+int NbElm(List2 L){
+   //kamus lokal
+   address P;
+   int count;
+   //algoritma
+   count = 0;
+   P = First(L);
+   if (P != NIL) {
+      do {
+         count++;
+         P = next(P);
+      } while (P != First(L));
+   }
+   return count;
+}
 
 /******* PENAMBAHAN ELEMEN LIST ********/
 /* Procedure InsertVFirst(input/output L:List2, input V:infotype )
@@ -112,18 +128,22 @@ void InsertVLast(List2 *L, infotype V ){
    address P, Last;
    //algoritma
    P = Alokasi(V);
-   if (IsEmptyList(*L)) {
-      First(*L) = P;
-      next(P) = First(*L);
+   if (P != NIL) {
+      if (IsEmptyList(*L)) {
+         First(*L) = P;
+         next(P) = First(*L);
    }
-   else {
-      Last = First(*L);
-      while (next(Last) != First(*L)) {
+      else {
+         Last = First(*L);
+         while (next(Last) != First(*L)) {
          Last = next(Last);
+
       }
-      next(P) = First(*L);
-      next(Last) = P;
+         next(P) = First(*L);
+         next(Last) = P;
    }
+   }
+
 }
 
 /******* PENGHAPUSAN ELEMEN ********/
@@ -191,45 +211,180 @@ void DeleteVLast(List2 *L, infotype *V){
 { I.S. List L tidak kosong }
 { F.S. Elemen bernilai X dihapus, dan didealokasi. 
 List mungkin menjadi kosong. }*/
-void DeleteX(List2 *L, infotype X);
+void DeleteX(List2 *L, infotype X){
+   //kamus lokal
+   address Prec, P;
+   //algoritma
+   if (!IsEmptyList(*L)) {
+      Prec = First(*L);
+      P = First(*L);
+      while (info(P) != X && next(P) != First(*L)) {
+         Prec = P;
+         P = next(P);
+      }
+      if (info(P) == X) {
+         if (IsOneElm(*L)) {
+            First(*L) = NIL;
+         }
+         else {
+            if (P == First(*L)) {
+               DeleteVFirst(L, &X);
+            }
+            else {
+               next(Prec) = next(P);
+               Dealokasi(&P);
+            }
+         }
+      }
+   }
+}
 
 /*** PENCARIAN ***/
 /*Procedure SearchX(input L:List2, input X:infotype, output A:address )
 { I.S. L, X terdefinisi }
 { F.S. A berisi alamat elemen yang nilainya X.
 Mencari apakah ada elemen list dengan info(P)= X. Jika ada, mengisi A dengan address elemen tersebut. Jika tidak ada, A=Nil }*/
-void SearchX(List2 L, infotype X, address *A);
+void SearchX(List2 L, infotype X, address *A){
+   //kamus lokal
+   address P;
+   //algoritma
+   P = First(L);
+   *A = NIL;
+   if (!IsEmptyList(L)) {
+      do {
+         if (info(P) == X) {
+            *A = P;
+         }
+         P = next(P);
+      } while (P != First(L) && *A == NIL);
+   }
+}
 
 /*** MANIPULASI ELEMEN LIST ***/
 /*Procedure UpdateX(input/output L:List2, input X:infotype, input Y:infotype)
 { I.S. L, X, Y terdefinisi }
 { F.S. L tetap, atau elemen bernilai X berubah menjadi Y.
 Mengganti elemen bernilai X menjadi bernilai Y}*/
-void UpdateX(List2 *L, infotype X, infotype Y);
+void UpdateX(List2 *L, infotype X, infotype Y){
+   //kamus lokal
+   address P;
+   //algoritma
+   SearchX(*L, X, &P);
+   if (P != NIL) {
+      info(P) = Y;
+   }
+}
 
 /*Procedure Invers(input/output L:List2)
 { I.S. L terdefinisi }
 { F.S. urutan posisi elemen terbalik, 
 misal {'A','B','C'} menjadi {'C','B','A'} }*/
-void Invers(List2 *L);
+void Invers(List2 *L){
+   //kamus lokal
+   address P, Prec, Last, F;
+   //algoritma
+   Prec = NIL;
+   P = First(*L);
+   if (P != NIL) {
+      F = First(*L);
+      do {
+         Last = P;
+         P = next(P);
+         next(Last) = Prec;
+         Prec = Last;
+      } while (P != F);
+      First(*L) = Last;
+      next(F) = Last;
+   }
+
+}
+void Invers2(List2 *L){
+   //kamus lokal
+   infotype P;
+   List2 L2;
+   //algoritma
+   CreateList(&L2);
+   do {
+      DeleteVLast(L, &P);
+      InsertVLast(&L2, P);
+   } while (!IsEmptyList(*L));
+   First(*L) = First(L2);
+
+}
 
 /*********** SOAL TAMBAHAN, DIKERJAKAN BILA LUANG *****************/
 
 /*function CountX(L:List2, X:infotype) -> integer */
 /*{ mengembalikan banyaknya kemunculan X dalam list L}*/
-int CountX(List2 L, infotype X);
+int CountX(List2 L, infotype X){
+   //kamus lokal
+   address P;
+   int countX;
+   //algoritma
+   P = First(L);
+   countX = 0;
+   if (P!= NIL) {
+      do {
+         if (info(P) == X) {
+            countX++;
+         }
+         P = next(P);
+      } while (P != First(L));
+   }
+   return countX;
+}
 
 /*function FrekuensiX(L:List2, X:infotype) -> real */
 /*{ mengembalikan rasio kemunculan X dibandingkan ukuran list L }*/
-float FrekuensiX(List2 L, infotype X);
+float FrekuensiX(List2 L, infotype X){
+   //kamus lokal
+   
+   //algoritma
+   return (float) CountX(L, X) / NbElm(L);
+}
 
 /*function CountVocal(L:List2) -> integer */
 /*{ mengembalikan banyaknya kemunculan huruf vokal dalam list L}*/
-int CountVocal(List2 L);
+int CountVocal(List2 L){
+   //kamus lokal
+   address P;
+   int countVocal;
+   //algoritma
+   P = First(L);
+   countVocal = 0;
+   if (P != NIL) {
+      do {
+         if (info(P) == 'A' || info(P) == 'I' || info(P) == 'U' || info(P) == 'E' || info(P) == 'O') {
+            countVocal++;
+         }
+         P = next(P);
+      } while (P != First(L));
+   }
+   return countVocal;
+}
 
 /*function CountNG(L:List2) -> integer */
 /*{ mengembalikan banyaknya huruf N yang langsung diikuti huruf G dalam list L}*/
-int CountNG(List2 L);
+int CountNG(List2 L){
+   //kamus lokal
+   address P;
+   int countNG;
+   //algoritma
+   P = First(L);
+   countNG = 0;
+   if (P != NIL) {
+      do {
+         if (info(P) == 'N' && info(next(P)) == 'G') {
+            countNG++;
+         }
+         P = next(P);
+      } while (P != First(L));
+   }
+   return countNG;
+}
+
+
+
 
 /*Procedure InsertVAfterX(input/output L:List2, input X:infotype, input V:infotype )
 { I.S. List L mungkin kosong }
