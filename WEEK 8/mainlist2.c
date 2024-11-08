@@ -46,10 +46,8 @@ int main()
   PrintList(Senarai);
   SearchX(Senarai,'Z',&P);
   printf("Alamat Z : %p\n", P);
-  //UpdateX(&Senarai,'Z','B');
-  //UpdateX(&Senarai,'A','U');
-  //PrintList(Senarai);
-  //Invers(&Senarai);
+  UpdateX(&Senarai,'Z','B');
+  UpdateX(&Senarai,'A','U');
   InsertVFirst(&Senarai,'A');
   InsertVLast(&Senarai,'Z');
   InsertVLast(&Senarai,'A');
