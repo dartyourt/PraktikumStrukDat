@@ -5,8 +5,8 @@
 #include "list2.h"
 /*================== PROTOTYPE =======================*/
 /****************** Manajemen Memori ******************/
-/* Function Alokasi(E:infotype)->address
-{mengembalikan alamat elemen E bila berhasil, Nil bila gagal} */
+/* Function Alokasi(E:infotype)->address */
+/* {mengembalikan alamat elemen E bila berhasil, Nil bila gagal} */
 address Alokasi(infotype E){
    //kamus lokal
    address P;
@@ -390,31 +390,120 @@ int CountNG(List2 L){
 { I.S. List L mungkin kosong }
 { F.S. P dialokasi, Info(P)=V }
 { Insert sebuah elemen beralamat P dengan Info(P)=V sebagai elemen dengan posisi setelah elemen bernilai X }*/
-void InsertVAfterX(List2 *L, infotype X, infotype V);
+void InsertVAfterX(List2 *L, infotype X, infotype V){
+   //kamus lokal
+   address P, Prec;
+   //algoritma
+   P = Alokasi(V);
+   if (P != NIL) {
+      SearchX(*L, X, &Prec);
+      if (Prec != NIL) {
+         next(P) = next(Prec);
+         next(Prec) = P;
+      }
+      else {
+         InsertVFirst(L, V);
+      }
+   }
+}
 
 /*Procedure InsertVBeforeX(input/output L:List2, input X:infotype, input V:infotype )
 { I.S. List L mungkin kosong }
 { F.S. P dialokasi, Info(P)=V }
 { Insert sebuah elemen beralamat P dengan Info(P)=V sebagai elemen dengan posisi sebelum elemen bernilai X }*/
-void InsertVBeforeX(List2 *L, infotype X, infotype V);
+void InsertVBeforeX(List2 *L, infotype X, infotype V){
+   //kamus lokal
+   address P, Prec, Last;
+   //algoritma
+   P = Alokasi(V);
+   if (P != NIL) {
+      SearchX(*L, X, &Prec);
+      if (Prec != NIL) {
+         if (Prec == First(*L)) {
+            InsertVFirst(L, V);
+         }
+         else {
+            Last = First(*L);
+            while (next(Last) != Prec) {
+               Last = next(Last);
+            }
+            next(P) = Prec;
+            next(Last) = P;
+         }
+      }
+      else {
+         InsertVLast(L, V);
+      }
+   }
+}
 
 /*Procedure DeleteVAfterX(input/output L:List2, input X:infotype, output V:infotype )
 { I.S. List L tidak kosong }
 { F.S. Elemen setelah X dihapus, dan didealokasi. Hasil penghapusan disimpan nilainya dalam V.
 List mungkin menjadi kosong. }*/
-void DeleteVAfterX(List2 *L, infotype X, infotype *V);
+void DeleteVAfterX(List2 *L, infotype X, infotype *V){
+   //kamus lokal
+   address Prec, P;
+   //algoritma
+   SearchX(*L, X, &Prec);
+   if (Prec != NIL) {
+      P = next(Prec);
+      if (P != NIL) {
+         *V = info(P);
+         if (next(P) == Prec) {
+            next(Prec) = First(*L);
+         }
+         else {
+            next(Prec) = next(P);
+         }
+         Dealokasi(&P);
+      }
+   }
+}
 
 /*Procedure DeleteVBeforeX(input/output L:List2, input X:infotype, output V:infotype )
 { I.S. List L tidak kosong }
 { F.S. Elemen sebelum X dihapus, dan didealokasi. Hasil penghapusan disimpan nilainya dalam V.
 List mungkin menjadi kosong. }*/
-void DeleteVBeforeX(List2 *L, infotype X, infotype *V);
+void DeleteVBeforeX(List2 *L, infotype X, infotype *V) {
+   // kamus lokal
+   address P, Prec, Suc;
+   // algoritma
+   P = NIL;
+   Prec = NIL;
+   Suc = First(*L);
+   if (Suc != NIL) {
+      while (next(Suc) != First(*L) && info(Suc) != X) {
+         Prec = P;
+         P = Suc;
+         Suc = next(Suc);
+      }
+      if (First(*L) != P && info(Suc) == X) {
+         next(Prec) = Suc;
+         *V = info(P);
+         Dealokasi(&P);
+      }
+      else if (First(*L) == P && info(Suc) == X) {
+         *V = info(P);
+         DeleteVFirst(L, V);
+      }
+   }
+}
+
 
 /*Procedure DeleteAllX(input/output L:List2, input X:infotype)
 { I.S. List L tidak kosong }
 { F.S. Semua elemen bernilai X dihapus, dan didealokasi. 
 List mungkin menjadi kosong. }*/
-void DeleteAllX(List2 *L, infotype X);
+void DeleteAllX(List2 *L, infotype X){
+   //kamus lokal
+   int sum;
+   //algoritma
+   sum = CountX(*L, X);
+   for (int i = 1; i <= sum; i++) {
+      DeleteX(L, X);
+   }
+}
 
 /*Procedure SearchAllX(input L:List2, input X:infotype)
 { I.S. L, X terdefinisi }
@@ -422,28 +511,132 @@ void DeleteAllX(List2 *L, infotype X);
 Proses: menampilkan posisi-posisi kemunculan elemen X dalam list L }*/
 /*misal L=['M','A','N','D','A'], SearchAllX(L,'A') menampilkan angka 2,5 */
 /*misal L=['M','A','N','D','A'], SearchAllX(L,'J') menampilkan angka 0 */
-void SearchAllX(List2 L, infotype X);
+void SearchAllX(List2 L, infotype X){
+   //kamus lokal
+   address P;
+   int count;
+   //algoritma
+   P = First(L);
+   count = 0;
+   if (P != NIL) {
+      do {
+         count++;
+         if (info(P) == X) {
+            printf("%d ", count);
+         }
+         P = next(P);
+      } while (P != First(L));
+   }
+   printf("\n");
+}
 
 /*function MaxMember(L:List2) -> integer */
 /*{ mengembalikan banyaknya huruf yang paling banyak muncul di list L}*/
-int MaxMember(List2 L);
+int MaxMember(List2 L){
+   //kamus lokal
+   address P;
+   int max, count;
+   //algoritma
+   P = First(L);
+   max = 0;
+   if (P != NIL) {
+      do {
+         count = CountX(L, info(P));
+         if (count > max) {
+            max = count;
+         }
+         P = next(P);
+      } while (P != First(L));
+   }
+   return max;
+}
 
 /*function Modus(L:List2) -> character */
 /*{ mengembalikan huruf yang paling banyak muncul dalam list L}*/
-char Modus(List2 L);
+char Modus(List2 L){
+   //kamus lokal
+   address P;
+   char modus;
+   //algoritma
+   P = First(L);
+   if (P != NIL) {
+      do {
+         if (CountX(L, info(P)) == MaxMember(L)) {
+            modus = info(P);
+         }
+         P = next(P);
+      } while (P != First(L) && MaxMember(L) > 1);
+   }
+   return modus;
+}
+
 
 /*OPERASI BANYAK LIST*/
 /*Procedure ConcatList(input L1:List2, input L2:List2, output L:List2)
 {I.S.: L1,L2 terdefinisi ; 
  F.S.: L gabungan L1 dan L2}*/
-void ConcatList(List2 L1, List2 L2, List2 *L); 
+void ConcatList(List2 L1, List2 L2, List2 *L){
+   //kamus lokal
+   address P;
+   //algoritma
+   CreateList(L);
+   if (!IsEmptyList(L1)) {
+      P = First(L1);
+      do {
+         InsertVLast(L, info(P));
+         P = next(P);
+      } while (P != First(L1));
+   }
+   if (!IsEmptyList(L2)) {
+      P = First(L2);
+      do {
+         InsertVLast(L, info(P));
+         P = next(P);
+      } while (P != First(L2));
+   }
+}
 
 /*Procedure SplitList(input L:List2, output L1:List2, output L2:List2)
 {I.S.: L terdefinisi ; 
  F.S.: L1, L2 hasil pemecahan L}*/
-void SplitList(List2 L, List2 *L1, List2 *L2);
+void SplitList(List2 L, List2 *L1, List2 *L2){
+   //kamus lokal
+   address P;
+   int i, n;
+   //algoritma
+   CreateList(L1);
+   CreateList(L2);
+   n = NbElm(L);
+   if (n % 2 == 0) {
+      n = n / 2;
+   }
+   else {
+      n = n / 2 + 1;
+   }
+   P = First(L);
+   for (i = 1; i <= n; i++) {
+      InsertVLast(L1, info(P));
+      P = next(P);
+   }
+   for (i = n + 1; i <= NbElm(L); i++) {
+      InsertVLast(L2, info(P));
+      P = next(P);
+   }
+}
 
 /*Procedure CopyList(input L1:List2, output L2:List2)
 {I.S.: L1 terdefinisi;  
  F.S.: L2 menjadi salinan L1}*/
-void CopyList(List2 L1, List2 *L2);
+void CopyList(List2 L1, List2 *L2){
+   //kamus lokal
+   address P;
+   //algoritma
+   CreateList(L2);
+   P = First(L1);
+   if (P != NIL) {
+      do {
+         InsertVLast(L2, info(P));
+         P = next(P);
+      } while (P != First(L1));
+   }
+}

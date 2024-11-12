@@ -6,8 +6,8 @@
 int main()
 { //kamus
   address P;
-  infotype D;
-  List2 Senarai;
+  infotype D, J;
+  List2 Senarai, Seranai, Sese, Nana, Rai;
   //algoritma
   
   /*aplikasi tipe address
@@ -46,16 +46,41 @@ int main()
   PrintList(Senarai);
   SearchX(Senarai,'Z',&P);
   printf("Alamat Z : %p\n", P);
-  UpdateX(&Senarai,'Z','B');
-  UpdateX(&Senarai,'A','U');
+  UpdateX(&Senarai,'Z','G');
+  UpdateX(&Senarai,'A','N');
   InsertVFirst(&Senarai,'A');
   InsertVLast(&Senarai,'Z');
-  InsertVLast(&Senarai,'A');
-  InsertVFirst(&Senarai,'X');
+  InsertVLast(&Senarai,'N');
+  InsertVFirst(&Senarai,'G');
   PrintList(Senarai);
   Invers(&Senarai);
   PrintList(Senarai);
   Invers2(&Senarai);
   PrintList(Senarai);
+  InsertVAfterX(&Senarai,'N','G');
+  InsertVBeforeX(&Senarai,'A','C');
+  PrintList(Senarai);
+  printf("Jumlah elemen NG : %d\n",CountNG(Senarai));
   printf("Jumlah elemen A : %d\n",CountX(Senarai,'A'));
+  DeleteVAfterX(&Senarai,'N',&J);
+  printf("Elemen setelah N yang dihapus : %c\n", J);
+  PrintList(Senarai);
+  DeleteAllX(&Senarai,'N');
+  PrintList(Senarai);
+  SearchAllX(Senarai,'G');
+  DeleteVBeforeX(&Senarai,'X',&J);
+  printf("Elemen sebelum X yang dihapus : %c\n", J);
+  printf("Modus adalah : %c\n",Modus(Senarai));
+  PrintList(Senarai);
+  SplitList(Senarai,&Seranai,&Sese);
+  printf("Seranai : ");
+  PrintList(Seranai);
+  printf("Sese : ");
+  PrintList(Sese);
+  ConcatList(Seranai,Sese,&Nana);
+  printf("Nana : ");
+  PrintList(Nana);
+  CopyList(Nana,&Rai);
+  printf("Rai : ");
+  PrintList(Rai);
 }
