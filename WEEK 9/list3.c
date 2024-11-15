@@ -284,19 +284,7 @@ void DeleteVBeforeX(List3 *L, infotype X, infotype *V);
 /*function CountX(L:List3, X:infotype) -> integer */
 /*{ mengembalikan banyaknya kemunculan X dalam list L}*/
 int CountX(List3 L, infotype X){
-    //kamus lokal
-    address P;
-    int count;
-    //algoritma
-    P = First(L);
-    count = 0;
-    while (P != NIL) {
-        if (info(P) == X) {
-            count++;
-        }
-        P = next(P);
-    }
-    return count;
+    
 }
 
 /*function FrekuensiX(L:List3, X:infotype) -> real */
