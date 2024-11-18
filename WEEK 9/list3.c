@@ -544,7 +544,7 @@ void DeleteAllX(List3 *L, infotype X){
  F.S.: L gabungan L1 dan L2}*/
 void ConcatList(List3 L1, List3 L2, List3 *L){
     //kamus lokal
-    address P, Q, R;
+    address P, Q;
     //algoritma
     CreateList(L);
     P = First(L1);
