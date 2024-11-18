@@ -5,9 +5,7 @@
 #include "list3.c"
 int main()
 { //kamus
-  address A; 
-  address B;
-  address P;
+  address A;
   infotype D;
   List3 Senarai, Seranai, Senam, Sese, Nana, Rai;
   //algoritma
