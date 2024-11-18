@@ -11,7 +11,7 @@
 {mengembalikan alamat elemen E bila berhasil, Nil bila gagal} */
 address Alokasi(infotype E){
     //kamus lokal
-    address P;
+    address P, temp;
     //algoritma
     P = (address) malloc(sizeof(Elm));
     if (P != NIL) {
@@ -244,6 +244,22 @@ void UpdateX(List3 *L, infotype X, infotype Y){
 { I.S. L terdefinisi }
 { F.S. urutan posisi elemen terbalik, misal {3,5,6} menjadi {6,5,3} }*/
 void Invers(List3 *L){
+    //kamus lokal
+    address P, temp;
+    //algoritma
+    P = First(*L);
+    while (next(P) != NIL) {
+        P = next(P);
+    }
+    First(*L) = P;
+    while (P != NIL) {
+        temp = next(P);
+        next(P) = prev(P);
+        prev(P) = temp;
+        P = next(P);
+    }
+}
+void Invers2(List3 *L){
    //kamus lokal
    infotype P;
    List3 temp;
@@ -261,51 +277,213 @@ void Invers(List3 *L){
 { I.S. List L mungkin kosong }
 { F.S. P dialokasi, Info(P)=V }
 { Insert sebuah elemen beralamat P dengan Info(P)=V sebagai elemen dengan posisi setelah elemen bernilai X }*/
-void InsertVAfterX(List3 *L, infotype X, infotype V){}
+void InsertVAfterX(List3 *L, infotype X, infotype V){
+    //kamus lokal
+    address P, Q;
+    //algoritma
+    P = Alokasi(V);
+    if (P != NIL) {
+        Q = First(*L);
+        while (Q != NIL && info(Q) != X) {
+            Q = next(Q);
+        }
+        if (Q != NIL) {
+            next(P) = next(Q);
+            prev(P) = Q;
+            next(Q) = P;
+            if (next(P) != NIL) {
+                prev(next(P)) = P;
+            }
+        }
+    }
+}
 
 /*Procedure InsertVBeforeX(input/output L:List3, input X:infotype, input V:infotype )
 { I.S. List L mungkin kosong }
 { F.S. P dialokasi, Info(P)=V }
 { Insert sebuah elemen beralamat P dengan Info(P)=V sebagai elemen dengan posisi sebelum elemen bernilai X }*/
-void InsertVBeforeX(List3 *L, infotype X, infotype V);
+void InsertVBeforeX(List3 *L, infotype X, infotype V){
+    //kamus lokal
+    address P, Q;
+    //algoritma
+    P = Alokasi(V);
+    if (P != NIL) {
+        Q = First(*L);
+        while (Q != NIL && info(Q) != X) {
+            Q = next(Q);
+        }
+        if (Q != NIL) {
+            prev(P) = prev(Q);
+            next(P) = Q;
+            prev(Q) = P;
+            if (prev(P) != NIL) {
+                next(prev(P)) = P;
+            }
+            else {
+                First(*L) = P;
+            }
+        }
+    }
+}
 
 /*Procedure DeleteVAfterX(input/output L:List3, input X:infotype, output V:infotype )
 { I.S. List L tidak kosong }
 { F.S. Elemen setelah X dihapus, dan didealokasi. Hasil penghapusan disimpan nilainya dalam V.
 List mungkin menjadi kosong. }*/
-void DeleteVAfterX(List3 *L, infotype X, infotype *V);
+void DeleteVAfterX(List3 *L, infotype X, infotype *V){
+    //kamus lokal
+    address P, temp;
+    //algoritma
+    P = First(*L);
+    while (P != NIL && info(P) != X) {
+        P = next(P);
+    }
+    if (P != NIL && next(P) != NIL) {
+        *V = info(next(P));
+        temp = next(P);
+        next(P) = next(temp);
+        if (next(P) != NIL) {
+            prev(next(P)) = P;
+        }
+        Dealokasi(&temp);
+        if (next(P) != NIL) {
+            prev(next(P)) = P;
+        }
+    }
+    else {
+        *V = '#';
+    }
+}
 
 /*Procedure DeleteVBeforeX(input/output L:List3, input X:infotype, output V:infotype )
 { I.S. List L tidak kosong }
 { F.S. Elemen sebelum X dihapus, dan didealokasi. Hasil penghapusan disimpan nilainya dalam V.
 List mungkin menjadi kosong. }*/
-void DeleteVBeforeX(List3 *L, infotype X, infotype *V);
+void DeleteVBeforeX(List3 *L, infotype X, infotype *V){
+    //kamus lokal
+    address P, temp;
+    //algoritma
+    P = First(*L);
+    while (P != NIL && info(P) != X) {
+        P = next(P);
+    }
+    if (P != NIL && prev(P) != NIL) {
+        *V = info(prev(P));
+        if (prev(prev(P)) != NIL) {
+            next(prev(prev(P))) = P;
+        } else {
+            First(*L) = P;
+        }
+        temp = prev(P);
+        Dealokasi(&temp);
+        prev(P) = prev(prev(P));
+    } else {
+        *V = '#';
+    }
+}
 
 /*function CountX(L:List3, X:infotype) -> integer */
 /*{ mengembalikan banyaknya kemunculan X dalam list L}*/
 int CountX(List3 L, infotype X){
+    //kamus lokal
+    address P;
+    int count;
+    //algoritma
+    P = First(L);
+    count = 0;
+    while (P != NIL) {
+        if (info(P) == X) {
+            count++;
+        }
+        P = next(P);
+    }
+    return count;
     
 }
 
 /*function FrekuensiX(L:List3, X:infotype) -> real */
 /*{ mengembalikan rasio kemunculan X dibandingkan ukuran list L }*/
-float FrekuensiX(List3 L, infotype X);
+float FrekuensiX(List3 L, infotype X){
+    //kamus lokal
+    //algoritma
+    return (float) CountX(L, X) / NbElm(L);
+}
 
 /*function MaxMember(L:List3) -> integer */
 /*{ mengembalikan banyaknya huruf yang paling banyak muncul di list L}*/
-int MaxMember(List3 L);
+int MaxMember(List3 L){
+    //kamus lokal
+    address P;
+    int max, count;
+    //algoritma
+    P = First(L);
+    max = 0;
+    while (P != NIL) {
+        count = CountX(L, info(P));
+        if (count > max) {
+            max = count;
+        }
+        P = next(P);
+    }
+    return max;
+}
 
 /*function Modus(L:List3) -> character */
 /*{ mengembalikan huruf yang paling banyak muncul dalam list L}*/
-char Modus(List3 L);
+char Modus(List3 L){
+    //kamus lokal
+    address P;
+    int max, count;
+    char modus;
+    //algoritma
+    P = First(L);
+    max = 0;
+    while (P != NIL) {
+        count = CountX(L, info(P));
+        if (count > max) {
+            max = count;
+            modus = info(P);
+        }
+        P = next(P);
+    }
+    return modus;
+}
 
 /*function CountVocal(L:List3) -> integer */
 /*{ mengembalikan banyaknya kemunculan huruf vokal dalam list L}*/
-int CountVocal(List3 L);
+int CountVocal(List3 L){
+    //kamus lokal
+    address P;
+    int count;
+    //algoritma
+    P = First(L);
+    count = 0;
+    while (P != NIL) {
+        if (info(P) == 'A' || info(P) == 'I' || info(P) == 'U' || info(P) == 'E' || info(P) == 'O') {
+            count++;
+        }
+        P = next(P);
+    }
+    return count;
+}
 
 /*function CountNG(L:List3) -> integer */
 /*{ mengembalikan banyaknya huruf N yang langsung diikuti huruf G dalam list L}*/
-int CountNG(List3 L);
+int CountNG(List3 L){
+    //kamus lokal
+    address P;
+    int count;
+    //algoritma
+    P = First(L);
+    count = 0;
+    while (next(P) != NIL) {
+        if (info(P) == 'N' && info(next(P)) == 'G') {
+            count++;
+        }
+        P = next(P);
+    }
+    return count;
+}
 
 /*Procedure SearchAllX(input L:List3, input X:infotype)
 { I.S. L, X terdefinisi }
@@ -313,26 +491,108 @@ int CountNG(List3 L);
 { Proses: menampilkan posisi-posisi kemunculan elemen X dalam list L }*/
 /*misal L=['M','A','N','D','A'], SearchAllX(L,'A') menampilkan angka 2,5 */
 /*misal L=['M','A','N','D','A'], SearchAllX(L,'J') menampilkan angka 0 */
-void SearchAllX(List3 L, infotype X);
+void SearchAllX(List3 L, infotype X){
+    //kamus lokal
+    address P;
+    int count;
+    //algoritma
+    P = First(L);
+    count = 0;
+    while (P != NIL) {
+        count++;
+        if (info(P) == X) {
+            printf("%d ", count);
+        }
+        P = next(P);
+    }
+    printf("\n");
+}
 
 /*Procedure DeleteAllX(input/output L:List3, input X:infotype)
 { I.S. List L tidak kosong }
 { F.S. List mungkin menjadi kosong. }
 { Proses: Semua elemen bernilai X dihapus, dan didealokasi. }*/
-void DeleteAllX(List3 *L, infotype X);
+void DeleteAllX(List3 *L, infotype X){
+    //kamus lokal
+    address P, temp;
+    //algoritma
+    P = First(*L);
+    while (P != NIL) {
+        if (info(P) == X) {
+            if (prev(P) == NIL) {
+                First(*L) = next(P);
+            }
+            else {
+                next(prev(P)) = next(P);
+            }
+            if (next(P) != NIL) {
+                prev(next(P)) = prev(P);
+            }
+            temp = P;
+            P = next(P);
+            Dealokasi(&temp);
+        }
+        else {
+            P = next(P);
+        }
+    }
+}
 
 /*OPERASI BANYAK LIST*/
 /*Procedure ConcatList(input L1:List3, input L2:List3, output L:List3)
 {I.S.: L1,L2 terdefinisi ; 
  F.S.: L gabungan L1 dan L2}*/
-void ConcatList(List3 L1, List3 L2, List3 *L); 
+void ConcatList(List3 L1, List3 L2, List3 *L){
+    //kamus lokal
+    address P, Q, R;
+    //algoritma
+    CreateList(L);
+    P = First(L1);
+    while (P != NIL) {
+        InsertVLast(L, info(P));
+        P = next(P);
+    }
+    Q = First(L2);
+    while (Q != NIL) {
+        InsertVLast(L, info(Q));
+        Q = next(Q);
+    }
+}
 
 /*Procedure SplitList(input L:List3, output L1:List3, output L2:List3)
 {I.S.: L terdefinisi ; 
  F.S.: L1, L2 hasil pemecahan L}*/
-void SplitList(List3 L, List3 *L1, List3 *L2);
+void SplitList(List3 L, List3 *L1, List3 *L2){
+    //kamus lokal
+    address P;
+    int i, n;
+    //algoritma
+    CreateList(L1);
+    CreateList(L2);
+    n = NbElm(L);
+    P = First(L);
+    for (i = 1; i <= n; i++) {
+        if (i <= n/2) {
+            InsertVLast(L1, info(P));
+        }
+        else {
+            InsertVLast(L2, info(P));
+        }
+        P = next(P);
+    }
+}
 
 /*Procedure CopyList(input L1:List3, output L2:List3)
 {I.S.: L1 terdefinisi;  
  F.S.: L2 menjadi salinan L1}*/
-void CopyList(List3 L1, List3 *L2);
+void CopyList(List3 L1, List3 *L2){
+    //kamus lokal
+    address P;
+    //algoritma
+    CreateList(L2);
+    P = First(L1);
+    while (P != NIL) {
+        InsertVLast(L2, info(P));
+        P = next(P);
+    }
+}

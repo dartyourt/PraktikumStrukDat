@@ -9,7 +9,7 @@ int main()
   address B;
   address P;
   infotype D;
-  List3 Senarai/*, Seranai, Senam, Sese, Nana, Rai*/;
+  List3 Senarai, Seranai, Senam, Sese, Nana, Rai;
   //algoritma
   
   /*aplikasi tipe address
@@ -31,7 +31,7 @@ int main()
   //PrintList( Senarai );8*/
 
   CreateList(&Senarai);
-  //CreateList(&Seranai);
+  CreateList(&Seranai);
   InsertVFirst(&Senarai,'G');
   InsertVLast(&Senarai,'N');
   InsertVFirst(&Senarai,'A');
@@ -51,24 +51,42 @@ int main()
   PrintList(Senarai);
   Invers(&Senarai);
   PrintList(Senarai);
-  SearchX(Senarai,'Z',&A);
+  SearchX(Senarai,'G',&A);
   printf("prev : %c\n", info(prev(A)));
-  /*printf("Jumlah elemen A : %d\n",CountX(Senarai,'A'));
-  printf("Frekuensi A : %.2f\n",FrekuensiX(Senarai,'A'));
-  SearchAllX(Senarai,'A');
-  printf("Jumlah elemen : %d\n",NbElm(Senarai));
-  UpdateAllX(&Senarai,'A','B');
-  InsertVAfter(&Senarai,'G','L');
+  InsertVAfterX(&Senarai,'G','L');
   PrintList(Senarai);
-  InsertVFirst(&Seranai,'G');
-  InsertVLast(&Seranai,'N');
+  InsertVBeforeX(&Senarai,'Z','E');
+  PrintList(Senarai);
+  DeleteVAfterX(&Senarai,'Z',&D);
+  printf("Elemen setelah Z yang dihapus : %c\n", D);
+  PrintList(Senarai);
+  DeleteVBeforeX(&Senarai,'E',&D);
+  printf("Elemen sebelum E yang dihapus : %c\n", D);
+  InsertVFirst(&Senarai,'G');
+  InsertVFirst(&Senarai,'N');
+  PrintList(Senarai);
+  printf("First L : %c\n",info(First(Senarai)));
+  printf("Jumlah elemen L : %d\n",CountX(Senarai,'L'));
+  printf("Frekuensi L : %.2f\n",FrekuensiX(Senarai,'L'));
+  printf("Max Member : %d\n",MaxMember(Senarai));
+  printf("Modus : %c\n",Modus(Senarai));
+  printf("Vokal : %d\n",CountVocal(Senarai));
+  printf("NG : %d\n",CountNG(Senarai));
+  SearchAllX(Senarai,'A');
+  DeleteAllX(&Senarai,'L');
+  PrintList(Senarai);
+  InsertVFirst(&Seranai,'Y');
+  InsertVLast(&Seranai,'W');
+  InsertVFirst(&Seranai,'I');
+  InsertVLast(&Seranai,'O');
   PrintList(Seranai);
   ConcatList(Senarai, Seranai, &Senam);
   PrintList(Senam);
+  printf("Jumlah vokal : %d\n",CountVocal(Senam));
   SplitList(Senam, &Sese, &Nana);
   PrintList(Sese);
   PrintList(Nana);
   CopyList(Sese, &Rai);
-  PrintList(Rai);*/
+  PrintList(Rai);
   return 0;
 }
