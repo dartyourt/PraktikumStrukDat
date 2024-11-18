@@ -11,7 +11,7 @@
 {mengembalikan alamat elemen E bila berhasil, Nil bila gagal} */
 address Alokasi(infotype E){
     //kamus lokal
-    address P, temp;
+    address P;
     //algoritma
     P = (address) malloc(sizeof(Elm));
     if (P != NIL) {
