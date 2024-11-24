@@ -2,15 +2,20 @@
 /* Deskripsi : ADT bintree berkait dengan representasi fisik pointer */
 /* NIM & Nama : */
 /* Tanggal : */
+
 #ifndef pohon1_H
 #define pohon1_H
+
+#include <stdio.h>
+#include <stdlib.h>
+#include "boolean.h"
 
 #define NIL NULL
 #define akar(P)   (P)->info
 #define info(P)   (P)->info
 #define left(P)   (P)->left 
 #define right(P)  (P)->right 
-typedef enum { false, true } boolean;
+
 /* typedef infotype = character */
 typedef char infotype; /* elemen bertipe character */
 /* typedef bintree = pointer to tnode */
