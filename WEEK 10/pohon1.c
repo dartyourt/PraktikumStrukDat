@@ -276,6 +276,20 @@ boolean IsSkewRight (bintree P){
 { menampilkan info semua elemen bintree P secara prefix linier ringkas} */
 /*contoh: A(B(( ),D),C)*/
 void PrintPrefix2(bintree P){
+    //kamus lokal
+    //algoritma
+    if (IsEmptyTree(P)) {
+        printf("( )");
+    } else {
+        printf("%c", GetAkar(P));
+        if (!IsEmptyTree(GetLeft(P)) || !IsEmptyTree(GetRight(P))) {
+            printf("(");
+            PrintPrefix2(GetLeft(P));
+            printf(",");
+            PrintPrefix2(GetRight(P));
+            printf(")");
+        }
+    }
 }
 
 
@@ -375,7 +389,7 @@ char Modus(bintree P){
                 max = count;
                 modus = info(temp);
             }
-            temp = temp->right;
+            temp = GetRight(temp);
         }
         return modus;
     }

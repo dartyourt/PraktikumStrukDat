@@ -10,7 +10,7 @@ int main () {
     bintree tree1;
     //algoritma
     tree1 = Tree('A', 
-                    Tree('B', 
+                    Tree('D', 
                         Tree('C', 
                             NIL, 
                             NIL), 
@@ -19,7 +19,7 @@ int main () {
                             NIL)), 
                     Tree('C', 
                         NIL, 
-                        Tree('Y', 
+                        Tree('D', 
                             NIL, 
                             NIL))
                 );
@@ -47,5 +47,6 @@ int main () {
     printf("frekuensi x: %f\n", FrekuensiX(tree1, 'C'));
     printf("count vocal: %d\n", CountVocal(tree1));
     printf("modus: %c\n", Modus(tree1));
+    PrintPrefix2(tree1);
     return 0;
 }
