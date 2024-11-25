@@ -277,6 +277,8 @@ boolean IsSkewRight (bintree P){
 /*contoh: A(B(( ),D),C)*/
 void PrintPrefix2(bintree P){
 }
+
+
 /*function LevelX(P:BinTree, X:infotype)-> integer
 { Mengirimkan level dari node X yang merupakan salah satu simpul dari pohon biner P. Akar(P) level-nya adalah 1. Pohon P tidak kosong. }*/
 int LevelX(bintree P, infotype X){
@@ -312,15 +314,23 @@ int CountLevelT(bintree P, int T){
 /*function GetDaunTerkiri(bintree P)-> infotype 
 {mengembalikan nilai info daun terkiri, bila tidak ada, hasilnya '#' }*/
 infotype GetDaunTerkiri(bintree P){
-    //kamus lokal
-    //algoritma
+   // Kamus lokal
+
+    // Algoritma
     if (IsEmptyTree(P)) {
-        return '#';
-    } else if (IsDaun(P)) {
+        return '#'; 
+    }
+
+    if (left(P) == NIL && right(P) == NIL) {
         return info(P);
-    } else {
+    }
+
+    if (left(P) != NIL) {
+
         return GetDaunTerkiri(left(P));
     }
+
+    return GetDaunTerkiri(right(P));
 }
 
 /*function FrekuensiX(L:bintree, X:infotype) -> real */
