@@ -24,6 +24,18 @@ int main () {
                             NIL, 
                             NIL))
                 );
+    tree2 = Tree('G', 
+                    Tree('E',
+                        NIL, 
+                        Tree('F', 
+                            NIL, 
+                            NIL)), 
+                    Tree('L', 
+                        Tree('K', 
+                            NIL, 
+                            NIL), 
+                            NIL)
+                );
     PrintTreeInden(tree1, 3);
     PrintLevel(tree1, 2);
     printf("\n");
@@ -50,5 +62,12 @@ int main () {
     PrintTreeInden(tree1, 3);
     printf("max tree: %c\n", maxTree(tree1));
     printf("min tree: %c\n", minTree(tree1));
+    printf("\n#############################################################\n");
+    PrintPrefix(tree2);
+    printf("apakah X ada: %s\n", BSearch(tree2, 'X') ? "ada" : "tidak ada");
+    InsSearch(tree2, 'X');
+    PrintTreeInden(tree2,3);
+    DelBtree(&tree2, 'X');
+    PrintTreeInden(tree2,3);
     return 0;
 }
