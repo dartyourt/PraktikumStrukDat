@@ -141,22 +141,22 @@ void InsertX(bintree *P, infotype X){
 { I.S. P tidak kosong }
 { F.S. P dihapus daun terkirinya, dan didealokasi, dengan X adalah info yang
 semula disimpan pada daun terkiri yang dihapus }*/
-void DelDaunTerkiri(bintree *P, infotype *X) {
-    // kamus lokal
+void DelDaunTerkiri(bintree *P, infotype *X){
+    //Kamus Lokal
 
-    // algoritma
-    if (!IsEmptyTree(*P)) {
-        if (IsDaun(*P)) {
-            *X = akar(*P);
-            Dealokasi(P);
-            *P = NIL;
-        }   
-        else {
-            if (left(*P) != NIL) {
-                DelDaunTerkiri(&left(*P), X);
-            }
-            else {
-                DelDaunTerkiri(&right(*P), X);
+    //Algoritma
+    if (!IsEmptyTree(*P)){
+        if(IsDaun(*P)){
+            //printf("masuk isdaun\n");
+            *X = info(*P);
+            //printf("coba ini %c\n", *X);
+            Dealokasi(&(*P));
+        }else{
+            //printf("masuk bukan daun");
+            if(!IsEmptyTree(left(*P))){
+                //printf("masuk kiri");
+                DelDaunTerkiri(&(left(*P)), X);
+                //menjelajah di cabang kiri saja sampai ketemu daun
             }
         }
     }

@@ -11,11 +11,11 @@ int main () {
     infotype Z;
     //algoritma
     tree1 = Tree('A', 
-                    Tree('X', 
+                    Tree('B', 
                         Tree('C', 
                             NIL, 
                             NIL), 
-                        Tree('E', 
+                        Tree('F', 
                             NIL, 
                             NIL)), 
                     Tree('F', 
@@ -43,9 +43,9 @@ int main () {
     printf("\n");
     printf("#############################################################");
     printf("\n");
-    //DelDaunTerkiri(&tree1, &Z);
-    //PrintTreeInden(tree1, 3);
-    //printf("elemen dihapus: %c\n", Z);
+    DelDaunTerkiri(&tree1, &Z);
+    PrintTreeInden(tree1, 3);
+    printf("elemen dihapus: %c\n", Z);
     DelDaun(&tree1, 'G');
     PrintTreeInden(tree1, 3);
     printf("max tree: %c\n", maxTree(tree1));
