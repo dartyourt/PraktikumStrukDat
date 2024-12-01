@@ -289,15 +289,70 @@ char minTree(bintree P){
 
 /*function BSearch (P : BinTree, X : infotype) → boolean
 { Mengirimkan true jika ada node dari pohon binary search P yang bernilai X }*/
-boolean BSearch(bintree P, infotype X);
+boolean BSearch(bintree P, infotype X){
+    //kamus lokal
+    //algoritma
+    if (IsEmptyTree(P)) {
+        return false;
+    } else {
+        if (GetAkar(P) == X) {
+            return true;
+        } else {
+            if (X < GetAkar(P)) {
+                return BSearch(GetLeft(P), X);
+            } else {
+                return BSearch(GetRight(P), X);
+            }
+        }
+    }
+}
 
 /*function InsSearch (P : BinTree, X : infotype) → BinTree
 { Menghasilkan sebuah pohon Binary Search Tree P dengan tambahan simpul X. Belum ada simpul P yang bernilai X. }*/
-bintree InsSearch(bintree P, infotype X);
+bintree InsSearch(bintree P, infotype X){
+    //kamus lokal
+    //algoritma
+    if (IsEmptyTree(P)) {
+        return Alokasi(X);
+    } else {
+        if (X < GetAkar(P)) {
+            left(P) = InsSearch(GetLeft(P), X);
+        } else {
+            right(P) = InsSearch(GetRight(P), X);
+        }
+        return P;
+    }
+}
 
 /*procedure DelBtree (input/output P : BinTree, input X : infotype)
 { I.S. Pohon binary search P tidak kosong }
 { F.S. Nilai X yang dihapus pasti ada }
 { Sebuah node dg nilai X dihapus }*/
-void DelBtree(bintree *P, infotype X);
+void DelBtree(bintree *P, infotype X){
+    //kamus lokal
+    bintree temp;
+
+    //algoritma
+    if (IsEmptyTree(*P)) {
+        return;
+    } else {
+        if (X < GetAkar(*P)) {
+            DelBtree(&left(*P), X);
+        } else if (X > GetAkar(*P)) {
+            DelBtree(&right(*P), X);
+        } else {
+            if (IsEmptyTree(GetLeft(*P))) {
+                temp = right(*P);
+                Dealokasi(P);
+                *P = temp;
+            } else if (IsEmptyTree(GetRight(*P))) {
+                temp = left(*P);
+                Dealokasi(P);
+                *P = temp;
+            } else {
+                DelDaunTerkiri(&left(*P), &info(*P));
+            }
+        }
+    }
+}
 
