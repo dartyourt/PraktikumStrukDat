@@ -80,6 +80,14 @@ boolean IsUnerRight (bintree3 P);
 /*contoh: A(B(( ),D(( ),( ))),C(( ),( )))*/
 void printDFS (bintree3 P);
 
+/*function SearchX(P:BinTree, X:infotype) -> boolean 
+{ Mengirimkan true jika ada node dari P yang bernilai X }*/
+boolean SearchX3(bintree3 P, infotype X);
+
+/*function SearchDaunX(P:BinTree, X:infotype) -> boolean 
+{ Mengirimkan true jika X adalah daun}*/
+boolean SearchDaunX3(bintree3 P, infotype X);
+
 /*procedure printPathX( input P:bintree3, input X:infotype)
 {menampilkan jalur dari akar P hingga node bernilai X }*/
 void printPathX (bintree3 P, infotype X);

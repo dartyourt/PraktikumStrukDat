@@ -22,7 +22,8 @@ bintree3 Alokasi3(infotype E){
         visited(P) = false;
         left(P) = NIL;
         right(P) = NIL;
-    }
+      }
+   
     return P;
 } //representasi fisik fungsi
 
@@ -122,6 +123,8 @@ void printDFS (bintree3 P){
       }
 }
 
+/*function SearchX(P:BinTree, X:infotype) -> boolean 
+{ Mengirimkan true jika ada node dari P yang bernilai X }*/
 boolean SearchX3(bintree3 P, infotype X){
     //kamus lokal
     //algoritma
@@ -131,6 +134,19 @@ boolean SearchX3(bintree3 P, infotype X){
         return true;
     } else {
         return SearchX3(left(P), X) || SearchX3(right(P), X);
+    }
+}
+/*function SearchDaunX(P:BinTree, X:infotype) -> boolean 
+{ Mengirimkan true jika X adalah daun}*/
+boolean SearchDaunX3(bintree3 P, infotype X){
+    //kamus lokal
+    //algoritma
+    if (IsEmptyTree(P)) {
+        return false;
+    } else if (IsDaun(P) && info(P) == X) {
+        return true;
+    } else {
+        return SearchDaunX3(left(P), X) || SearchDaunX3(right(P), X);
     }
 }
 
@@ -166,45 +182,132 @@ void printPathX (bintree3 P, infotype X){
 
 /*procedure printPathDaunX( input P:bintree3, input X:infotype)
 {menampilkan jalur dari akar P hingga daun bernilai X }*/
-void printPathDaunX (bintree3 P, infotype X);
+void printPathDaunX (bintree3 P, infotype X){
+   //kamus lokal
+   //algoritma
+   if (!IsEmptyTree(P)) {
+      if (SearchDaunX3(P, X)){
+         printPathX(P, X);
+         }        
+      }
+}
 
 /*procedure printAllPaths( input P:bintree3)
 {menampilkan semua jalur yang mungkin dari akar P hingga setiap daun}*/
-void printAllPaths (bintree3 P);
+void printAllPaths(bintree3 P) {
+   if(!IsEmptyTree(P)){
+      if(IsDaun(P)){
+         printPathDaunX(P, info(P));
+      }else{
+         printAllPaths(left(P));
+         printAllPaths(right(P));
+      }
+   }
+}
 
 /* function NbElmTree(P:bintree3) --> integer
 { menghitung banyaknya elemen bintree3 P} */
-int NbElmTree (bintree3 P);
+int NbElmTree (bintree3 P){
+      //kamus lokal
+      //algoritma
+      if (IsEmptyTree(P)) {
+         return 0;
+      } else {
+         return 1 + NbElmTree(left(P)) + NbElmTree(right(P));
+      }
+}
 
 /* function NbDaun(P:bintree3)-> integer
 { Mengirimkan banyaknya daun (node) pohon biner P }*/
-int NbDaun (bintree3 P);
+int NbDaun (bintree3 P){
+      //kamus lokal
+      //algoritma
+      if (IsEmptyTree(P)) {
+         return 0;
+      } else if (IsDaun(P)) {
+         return 1;
+      } else {
+         return NbDaun(left(P)) + NbDaun(right(P));
+      }
+}
 
 /* function max2(int a, int b)->integer
 {mengembalikan nilai maksimal dari a atau b}*/
-int Max2 (int a, int b);
+int Max2 (int a, int b){
+      //kamus lokal
+      //algoritma
+      return (a > b) ? a : b;
+}
 
 /* function Tinggi(P:bintree3)-> integer
 {menghitung tinggi pohon P, tinggi pohon 1 elemen = 0 }*/
-int Tinggi (bintree3 P);
+int Tinggi (bintree3 P){
+      //kamus lokal
+      //algoritma
+      if (IsEmptyTree(P)) {
+         return -1;
+      } else {
+         return 1 + Max2(Tinggi(left(P)), Tinggi(right(P)));
+      }
+}
 
 /* function Level(P:bintree3)-> integer
 {menghitung tingkat/generasi node pohon P, level akar=1 }*/
-int Level (bintree3 P);
+int Level (bintree3 P){
+      //kamus lokal
+      //algoritma
+      if (IsEmptyTree(P)) {
+         return 0;
+      } else {
+         return 1 + Level(parent(P));
+      }
+}
 
 /*function CountLevelT(P:bintree3, T:integer)-> integer
 { menghitung banyaknya node pada tingkat T. }*/
-int CountLevelT (bintree3 P, int T);
+int CountLevelT (bintree3 P, int T){
+      //kamus lokal
+      //algoritma
+      if (IsEmptyTree(P)) {
+         return 0;
+      } else if (T == 1) {
+         return 1;
+      } else {
+         return CountLevelT(left(P), T-1) + CountLevelT(right(P), T-1);
+      }
+}
 
 /*procedure PrintLevel(input P:bintree, input N:integer)
 {I.S. L terdefinisi; F.S. :-}
 { menampilkan info semua elemen bintree P pada generasi/level N}*/
-void PrintLevel (bintree3 P, int N);
+void PrintLevel (bintree3 P, int N){
+   if (IsEmptyTree(P)) {
+      return;
+   }
+   if (N == 1) {
+      printf("%c ", info(P));
+   } else if (N > 1) {
+      PrintLevel(left(P), N-1);
+      PrintLevel(right(P), N-1);
+   }
+}
 
 /* procedure PrintBFS( input P:bintree3)
 {mencetak node-node P dari generasi paling terkecil ke terbesar}*/
 /*contoh: A B C D */
-void PrintBFS (bintree3 P);
+void PrintBFS (bintree3 P){
+      //kamus lokal
+      int i;
+      //algoritma
+      if(!IsEmptyTree(P)){
+         for(i=1; i<=Tinggi(P)+1; i++){
+            PrintLevel(P, i);
+         }
+      }
+      else{
+         printf("Pohon kosong\n");
+      }
+}
 
 /*********** SOAL TAMBAHAN, DIKERJAKAN BILA LUANG *****************/
 
