@@ -317,25 +317,86 @@ void PrintBFS (bintree3 P){
 /*procedure Pconcat( input/output Asli:list1, input Tambahan:list1) */
 /*{I.S:- ; F.S: list Asli berubah karena disambung list Tambahan}*/
 /*{menyambung list Tambahan ke belakang list Asli}*/
-void Pconcat (List1 *Asli, List1 Tambahan); 
+void Pconcat (List1 *Asli, List1 Tambahan){
+      //kamus lokal
+      address P;
+      //algoritma
+      if (IsEmptyList(*Asli)) {
+         *Asli = Tambahan;
+      } else {
+         P = First(*Asli);
+         while (next(P) != NIL) {
+               P = next(P);
+         }
+         next(P) = First(Tambahan);
+      }
+}
 
 /*function fconcat( Asli:List1, Tambahan:List1) -> List1 */
 /*{membentuk list Baru hasil penyambungan list Tambahan ke belakang list Asli}*/
 /*{periksa dampaknya, list Asli tidak boleh berubah }*/
-List1 Fconcat (List1 Asli, List1 Tambahan); 
+List1 Fconcat (List1 Asli, List1 Tambahan){
+      //kamus lokal
+      List1 L;
+      address P;
+      //algoritma
+      if (IsEmptyList(Asli)) {
+         return Tambahan;
+      } else {
+         L = Asli;
+         P = First(L);
+         while (next(P) != NIL) {
+               P = next(P);
+         }
+         next(P) = First(Tambahan);
+         return L;
+      }
+}
 
 /*** LINEARISASI POHON ***/
 /*function linearPrefix(P:bintree3) -> List1
 {menghasilkan list node dari P terurut prefix akar,kiri,kanan}*/
-List1 LinearPrefix (bintree3 P);
+List1 LinearPrefix (bintree3 P){
+   List1 L;
+   CreateList(&L);
+   if (!IsEmptyTree(P)) {
+      InsertVLast(&L, info(P));
+      List1 leftList = LinearPrefix(left(P));
+      List1 rightList = LinearPrefix(right(P));
+      Pconcat(&L, leftList);
+      Pconcat(&L, rightList);
+   }
+   return L;
+}
 
 /*function linearPosfix(P:bintree3) -> List1
 {menghasilkan list node dari P terurut posfix kiri,kanan,akar}*/
-List1 LinearPosfix (bintree3 P);
+List1 LinearPosfix (bintree3 P){
+   List1 L;
+   CreateList(&L);
+   if (!IsEmptyTree(P)) {
+      List1 leftList = LinearPosfix(left(P));
+      List1 rightList = LinearPosfix(right(P));
+      Pconcat(&L, leftList);
+      Pconcat(&L, rightList);
+      InsertVLast(&L, info(P));
+   }
+   return L;
+}
 
 /*function linearInfix(P:bintree3) -> List1
 {menghasilkan list node dari P terurut infix kiri,akar,kanan}*/
-List1 LinearInfix (bintree3 P);
+List1 LinearInfix (bintree3 P){
+   List1 L;
+   CreateList(&L);
+   if (!IsEmptyTree(P)) {
+      List1 leftList = LinearInfix(left(P));
+      InsertVLast(&L, info(P));
+      List1 rightList = LinearInfix(right(P));
+      Pconcat(&L, rightList);
+   }
+   return L;
+}
 
 /*function linearBreadthFS(P:bintree3) -> List1
 {menghasilkan list node dari P terurut level/tingkat}*/
