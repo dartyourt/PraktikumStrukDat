@@ -346,7 +346,7 @@ infotype Modus(List1 L){
  F.S.: L gabungan L1 dan L2}*/
 void ConcatList(List1 L1, List1 L2, List1 *L){
 	//kamus lokal
-	address P, Last;
+	address P;
 	//algoritma
 	CreateList(L);
 	if (!IsEmptyList(L1)) {

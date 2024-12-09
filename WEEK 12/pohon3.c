@@ -194,15 +194,43 @@ void printPathDaunX (bintree3 P, infotype X){
 
 /*procedure printAllPaths( input P:bintree3)
 {menampilkan semua jalur yang mungkin dari akar P hingga setiap daun}*/
-void printAllPaths(bintree3 P) {
+/*procedure printAllPaths( input P:bintree3)
+{menampilkan semua jalur yang mungkin dari akar P hingga setiap daun}*/
+/*procedure printAllPaths( input P:bintree3)
+{menampilkan semua jalur yang mungkin dari akar P hingga setiap daun}*/
+void printAllPaths(bintree3 P){
+   //Kamus Lokal
+   bintree3 temp;
+
+   //Algoritma
    if(!IsEmptyTree(P)){
-      if(IsDaun(P)){
-         printPathDaunX(P, info(P));
-      }else{
+      if(!IsDaun(P)){
          printAllPaths(left(P));
          printAllPaths(right(P));
+      }else{
+         temp = P;
+         while (parent(temp) != NIL){
+            visited(temp) = true;
+            temp = parent(temp);
+         }
+
+         //temp di akar paling atas
+         do{
+            printf("%c", akar(temp));
+            if(!IsEmptyTree(left(temp)) && visited(left(temp))){
+               printf(" -> ");
+               temp = left(temp);
+            }else if (!IsEmptyTree(right(temp)) && visited(right(temp))){
+               printf(" -> ");
+               temp = right(temp);
+            }else{
+               printf("\n");
+               temp = NIL;
+            }
+         }while(temp != NIL);
       }
    }
+   resetVisited(P);
 }
 
 /* function NbElmTree(P:bintree3) --> integer
@@ -357,12 +385,15 @@ List1 Fconcat (List1 Asli, List1 Tambahan){
 /*function linearPrefix(P:bintree3) -> List1
 {menghasilkan list node dari P terurut prefix akar,kiri,kanan}*/
 List1 LinearPrefix (bintree3 P){
-   List1 L;
+   // kamus lokal 
+   List1 L, leftList, rightList;
+
+   // algoritma
    CreateList(&L);
    if (!IsEmptyTree(P)) {
       InsertVLast(&L, info(P));
-      List1 leftList = LinearPrefix(left(P));
-      List1 rightList = LinearPrefix(right(P));
+      leftList = LinearPrefix(left(P));
+      rightList = LinearPrefix(right(P));
       Pconcat(&L, leftList);
       Pconcat(&L, rightList);
    }
@@ -372,11 +403,14 @@ List1 LinearPrefix (bintree3 P){
 /*function linearPosfix(P:bintree3) -> List1
 {menghasilkan list node dari P terurut posfix kiri,kanan,akar}*/
 List1 LinearPosfix (bintree3 P){
-   List1 L;
+   // kamus lokal
+   List1 L, leftList, rightList;
+   
+   // algoritma
    CreateList(&L);
    if (!IsEmptyTree(P)) {
-      List1 leftList = LinearPosfix(left(P));
-      List1 rightList = LinearPosfix(right(P));
+      leftList = LinearPosfix(left(P));
+      rightList = LinearPosfix(right(P));
       Pconcat(&L, leftList);
       Pconcat(&L, rightList);
       InsertVLast(&L, info(P));
@@ -386,13 +420,19 @@ List1 LinearPosfix (bintree3 P){
 
 /*function linearInfix(P:bintree3) -> List1
 {menghasilkan list node dari P terurut infix kiri,akar,kanan}*/
+/*function linearInfix(P:bintree3) -> List1
+{menghasilkan list node dari P terurut infix kiri,akar,kanan}*/
 List1 LinearInfix (bintree3 P){
-   List1 L;
+   // kamus lokal
+   List1 L, leftList, rightList;
+   
+   // algoritma
    CreateList(&L);
    if (!IsEmptyTree(P)) {
-      List1 leftList = LinearInfix(left(P));
+      leftList = LinearInfix(left(P));
+      Pconcat(&L, leftList);
       InsertVLast(&L, info(P));
-      List1 rightList = LinearInfix(right(P));
+      rightList = LinearInfix(right(P));
       Pconcat(&L, rightList);
    }
    return L;
@@ -400,4 +440,18 @@ List1 LinearInfix (bintree3 P){
 
 /*function linearBreadthFS(P:bintree3) -> List1
 {menghasilkan list node dari P terurut level/tingkat}*/
-List1 LinearBreadthFS (bintree3 P);
+List1 LinearBreadthFS (bintree3 P){
+   // kamus lokal
+   List1 L, leftList, rightList;
+   
+   // algoritma
+   CreateList(&L);
+   if (!IsEmptyTree(P)) {
+      InsertVLast(&L, info(P));
+      leftList = LinearBreadthFS(left(P));
+      rightList = LinearBreadthFS(right(P));
+      Pconcat(&L, leftList);
+      Pconcat(&L, rightList);
+   }
+   return L;
+}
